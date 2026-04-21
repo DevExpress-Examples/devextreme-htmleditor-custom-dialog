@@ -67,6 +67,7 @@ class EmojiPopupHelper {
         placeholder: 'Find something fun',
         mode: 'search',
         stylingMode: 'filled',
+        valueChangeEvent: 'input',
         onValueChanged: (e) => {
           const searchTerm = (e.value || '').toLowerCase().trim();
 
