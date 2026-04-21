@@ -9,13 +9,22 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/devextreme-dist/css/dx.material.blue.light.compact.css" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/devextreme-quill/dist/dx-quill.js"></script>
     <script type="text/javascript" src="../node_modules/devextreme-dist/js/dx.all.js"></script>
-    <script type="text/javascript" src="index.js"></script>
+
+    <script type="module" src="index.js"></script>
   </head>
 
   <body class="dx-viewport">
     <div class="demo-container">
-      <div id="btn"></div>
+      <div class="html-editor"></div>
+
+      <div id="emoji-popup"></div>
+      <div id="video-popup"></div>
+      <div id="link-popup"></div>
+      <div id="markup-popup">
+        <div class="value-content"></div>
+      </div>
     </div>
   </body>
 </html>
