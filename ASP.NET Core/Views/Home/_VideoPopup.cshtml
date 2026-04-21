@@ -1,0 +1,40 @@
+@(Html.DevExtreme().Popup()
+    .ID("video-popup")
+    .ShowTitle(true)
+    .Title("Insert Video")
+    .Width(450)
+    .Height(320)
+    .DeferRendering(false)
+    .ShowCloseButton(true)
+    .ContentTemplate(@<text>
+        <div style="padding: 10px;">
+            @(Html.DevExtreme().TextBox()
+                .ID("video-url-box")
+                .Placeholder("Enter YouTube or external URL...")
+                .ShowClearButton(true)
+                .OnValueChanged("VideoPopupHelper.onUrlChanged")
+            )
+
+            <div style="text-align: center; margin: 15px 0; font-weight: bold; color: #888;">— OR —</div>
+
+            @(Html.DevExtreme().FileUploader()
+                .ID("video-file-uploader")
+                .SelectButtonText("Select Local Video File")
+                .LabelText("")
+                .Accept("video/*")
+                .UploadMode(FileUploadMode.UseForm)
+                .OnValueChanged("VideoPopupHelper.onFileChanged")
+                )
+
+            <div stye="margin-top: 25px;" />
+
+            @(Html.DevExtreme().Button()
+                .ID("video-apply-btn")
+                .Text("Insert Video")
+                .Type(ButtonType.Default)
+                .Width("100%")
+                .OnClick("VideoPopupHelper.onApplyClick")
+            )
+        </div>
+    </text>)
+)

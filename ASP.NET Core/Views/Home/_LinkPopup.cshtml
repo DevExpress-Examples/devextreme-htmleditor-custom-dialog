@@ -1,0 +1,42 @@
+@(Html.DevExtreme().Popup()
+    .ID("link-popup")
+    .ShowTitle(true)
+    .Title("Insert Custom Link")
+    .Width(450)
+    .Height(380)
+    .DeferRendering(false)
+    .ShowCloseButton(true)
+    .ContentTemplate(@<text>
+        <div style="padding: 10px;">
+            @(Html.DevExtreme().TextBox()
+                .ID("link-url-box")
+                .Placeholder("Enter URL (e.g., https://google.com)...")
+                .ShowClearButton(true)
+            )
+
+            <div style="margin: 15px 0 5px 0; font-weight: bold; font-size: 13px; color: #555;">Link Text:</div>
+
+            @(Html.DevExtreme().HtmlEditor()
+                .ID("link-text-editor")
+                .Height(120)
+                .Toolbar(toolbar => toolbar.Items(items => {
+                    items.Add().Name("header").Visible(false);
+                    items.Add().Name("bold");
+                    items.Add().Name("italic");
+                    items.Add().Name("underline");
+                    items.Add().Name("strike");
+                    items.Add().Name("color");
+                }))           
+            )
+
+            <div style="margin-top: 20px;" />
+
+            @(Html.DevExtreme().Button()
+                .Text("Apply Link")
+                .Type(ButtonType.Default)
+                .Width("100%")
+                .OnClick("LinkPopupHelper.onApplyClick")
+            )
+        </div>
+    </text>)
+)

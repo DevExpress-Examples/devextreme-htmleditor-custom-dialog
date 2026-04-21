@@ -1,0 +1,28 @@
+@(Html.DevExtreme().Popover()
+    .ID("emoji-popup")
+    .Width(320)
+    .Height(380)
+    .ShowTitle(false)
+    .DeferRendering(false)
+    .Position(Position.Top)
+    .HideOnOutsideClick(true)
+    .HideOnParentScroll(false)
+    .ContentTemplate(@<text>
+        <div style="display: flex; flex-direction: column; height: 100%; padding: 0;">
+            <div style="padding: 12px; border-bottom: 1px solid #eee;">
+                @(Html.DevExtreme().TextBox()
+                    .ID("emoji-search-box")
+                    .Placeholder("Find something fun")
+                    .Mode(TextBoxMode.Search)
+                    .ValueChangeEvent("input")
+                    .StylingMode(EditorStylingMode.Filled)
+                    .OnValueChanged("EmojiPopupHelper.onSearchChanged")
+                )
+            </div>
+            <div style="flex: 1; overflow-y: auto; padding: 12px;">
+                <div style="font-size: 13px; font-weight: 600; color: #555; margin-bottom: 10px;">Emoji</div>
+                <div id="emoji-grid" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px;"></div>
+            </div>
+        </div>
+    </text>)
+)
