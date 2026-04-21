@@ -1,4 +1,4 @@
-export function getToolbarItems(editorInstance, { linkHelper, emojiHelper, videoHelper, markupPopup }) {
+export function getToolbarItems(ctx) {
   return [
     'undo',
     'redo',
@@ -26,10 +26,10 @@ export function getToolbarItems(editorInstance, { linkHelper, emojiHelper, video
         hint: 'Insert Custom Link',
         stylingMode: 'text',
         onClick() {
-          const range = editorInstance.getSelection();
-          const index = range ? range.index : editorInstance.getLength();
+          const range = ctx.editor.getSelection();
+          const index = range ? range.index : ctx.editor.getLength();
           const length = range ? range.length : 0;
-          linkHelper.show(index, length);
+          ctx.linkHelper.show(index, length);
         },
       },
     },
@@ -41,9 +41,9 @@ export function getToolbarItems(editorInstance, { linkHelper, emojiHelper, video
         focusStateEnabled: false,
         stylingMode: 'text',
         onClick(e) {
-          const range = editorInstance.getSelection();
-          const index = range ? range.index : editorInstance.getLength();
-          emojiHelper.show(index, e.element);
+          const range = ctx.editor.getSelection();
+          const index = range ? range.index : ctx.editor.getLength();
+          ctx.emojiHelper.show(index, e.element);
         },
       },
     },
@@ -54,10 +54,10 @@ export function getToolbarItems(editorInstance, { linkHelper, emojiHelper, video
         hint: 'Insert/Edit Video',
         stylingMode: 'text',
         onClick() {
-          const range = editorInstance.getSelection();
-          const index = range ? range.index : editorInstance.getLength();
+          const range = ctx.editor.getSelection();
+          const index = range ? range.index : ctx.editor.getLength();
           const length = range ? range.length : 0;
-          videoHelper.show(index, length);
+          ctx.videoHelper.show(index, length);
         },
       },
     },
@@ -67,7 +67,7 @@ export function getToolbarItems(editorInstance, { linkHelper, emojiHelper, video
         text: 'Show markup',
         stylingMode: 'text',
         onClick() {
-          markupPopup.show();
+          ctx.markupPopup.show();
         },
       },
     },

@@ -4,23 +4,27 @@ import { getToolbarItems } from './toolbarConfig.js';
 import markup from './data/markup.js';
 
 $(() => {
+  const ctx = {};
+
   const editorInstance = $('.html-editor')
     .dxHtmlEditor({
       value: markup,
       customizeModules(config) {
         VideoPopupHelper.setupClipboard(config);
       },
-      toolbar: { items: [] },
+      toolbar: {
+        items: getToolbarItems(ctx),
+      },
     })
     .dxHtmlEditor('instance');
 
   VideoPopupHelper.registerBlot(editorInstance);
 
-  const emojiHelper = new EmojiPopupHelper('#emoji-popup', editorInstance);
-  const videoHelper = new VideoPopupHelper('#video-popup', editorInstance);
-  const linkHelper = new LinkPopupHelper('#link-popup', editorInstance);
-
-  const markupPopup = $('#markup-popup')
+  ctx.editor = editorInstance;
+  ctx.emojiHelper = new EmojiPopupHelper('#emoji-popup', editorInstance);
+  ctx.videoHelper = new VideoPopupHelper('#video-popup', editorInstance);
+  ctx.linkHelper = new LinkPopupHelper('#link-popup', editorInstance);
+  ctx.markupPopup = $('#markup-popup')
     .dxPopup({
       showTitle: true,
       title: 'Markup',
@@ -30,13 +34,4 @@ $(() => {
       },
     })
     .dxPopup('instance');
-
-  const toolbarItems = getToolbarItems(editorInstance, {
-    linkHelper,
-    emojiHelper,
-    videoHelper,
-    markupPopup,
-  });
-
-  editorInstance.option('toolbar.items', toolbarItems);
 });
