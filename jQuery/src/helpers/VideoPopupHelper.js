@@ -1,6 +1,6 @@
 class VideoPopupHelper {
-  static setupClipboard(cfg) {
-    cfg.clipboard.matchers.push([
+  static setupClipboard(config) {
+    config.clipboard.matchers.push([
       'a',
       (node, delta) => {
         const url = node.href;
@@ -16,7 +16,7 @@ class VideoPopupHelper {
       },
     ]);
 
-    cfg.clipboard.matchers.push([
+    config.clipboard.matchers.push([
       'iframe',
       (node, delta) => {
         delta.ops = [{ insert: { video: node.src } }, { insert: '\n' }];
@@ -24,7 +24,7 @@ class VideoPopupHelper {
       },
     ]);
 
-    cfg.clipboard.matchers.push([
+    config.clipboard.matchers.push([
       'video',
       (node, delta) => {
         delta.ops = [{ insert: { nativeVideo: node.src } }, { insert: '\n' }];
