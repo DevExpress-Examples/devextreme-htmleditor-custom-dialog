@@ -147,7 +147,7 @@ class VideoPopupHelper {
 
     this.urlBox = $('<div>')
       .dxTextBox({
-        placeholder: 'Enter YouTube or external URL...',
+        placeholder: 'Enter video URL...',
         showClearButton: true,
         onValueChanged: (e) => {
           if (e.value) {
@@ -166,7 +166,7 @@ class VideoPopupHelper {
 
     this.fileUploader = $('<div>')
       .dxFileUploader({
-        selectButtonText: 'Select Local Video File',
+        selectButtonText: 'Upload a Video File',
         labelText: '',
         accept: 'video/*',
         uploadMode: 'useForm',
@@ -185,7 +185,7 @@ class VideoPopupHelper {
 
     this.applyBtn = $('<div>')
       .dxButton({
-        text: 'Insert Video',
+        text: 'Insert',
         type: 'default',
         width: '100%',
         onClick: () => this._applyVideo(),

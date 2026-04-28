@@ -7,7 +7,7 @@ class LinkPopupHelper {
     this.popup = $(selector)
       .dxPopup({
         showTitle: true,
-        title: 'Insert Custom Link',
+        title: 'Insert Formatted Link',
         width: 450,
         height: 380,
         deferRendering: false,
@@ -52,11 +52,13 @@ class LinkPopupHelper {
       .dxTextBox({
         placeholder: 'Enter URL (e.g., https://google.com)...',
         showClearButton: true,
+        label: "URL:",
+        labelMode: 'outside',
       })
       .appendTo(container)
       .dxTextBox('instance');
 
-    $('<div style="margin: 15px 0 5px 0; font-weight: bold; font-size: 13px; color: #555;">Link Text:</div>')
+    $('<div style="margin-top: 15px; font-size: 12px;">Link Text:</div>')
       .appendTo(container);
 
     this.textEditor = $('<div>')
@@ -71,7 +73,7 @@ class LinkPopupHelper {
 
     $('<div>')
       .dxButton({
-        text: 'Apply Link',
+        text: 'Insert',
         type: 'default',
         width: '100%',
         onClick: () => this._applyLink(),

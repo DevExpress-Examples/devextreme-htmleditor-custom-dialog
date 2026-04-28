@@ -64,7 +64,7 @@ export function getToolbarItems(ctx) {
     {
       widget: 'dxButton',
       options: {
-        text: 'Show markup',
+        text: 'Display Markup',
         stylingMode: 'text',
         onClick() {
           ctx.markupPopup.show();
