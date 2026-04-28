@@ -10,7 +10,7 @@
         <div style="padding: 10px;">
             @(Html.DevExtreme().TextBox()
                 .ID("video-url-box")
-                .Placeholder("Enter YouTube or external URL...")
+                .Placeholder("Enter video URL...")
                 .ShowClearButton(true)
                 .OnValueChanged("VideoPopupHelper.onUrlChanged")
             )
@@ -19,18 +19,18 @@
 
             @(Html.DevExtreme().FileUploader()
                 .ID("video-file-uploader")
-                .SelectButtonText("Select Local Video File")
+                .SelectButtonText("Upload a Video File")
                 .LabelText("")
                 .Accept("video/*")
                 .UploadMode(FileUploadMode.UseForm)
                 .OnValueChanged("VideoPopupHelper.onFileChanged")
                 )
 
-            <div stye="margin-top: 25px;" />
+            <div style="margin-top: 20px;"></div>
 
             @(Html.DevExtreme().Button()
                 .ID("video-apply-btn")
-                .Text("Insert Video")
+                .Text("Insert")
                 .Type(ButtonType.Default)
                 .Width("100%")
                 .OnClick("VideoPopupHelper.onApplyClick")

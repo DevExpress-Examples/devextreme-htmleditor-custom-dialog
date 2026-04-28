@@ -58,7 +58,7 @@
         );
 
         items.Add().Widget(w => w.Button()
-            .Text("Show markup")
+            .Text("Display Markup")
             .StylingMode(ButtonStylingMode.Text)
             .OnClick("onMarkupClick")
         );
@@ -66,9 +66,9 @@
 )
 
 @section Scripts {
-    <script src="~/js/helpers/VideoPopupHelper.js"></script>
-    <script src="~/js/helpers/EmojiPopupHelper.js"></script>
-    <script src="~/js/helpers/LinkPopupHelper.js"></script>
+    <script src="~/js/helpers/VideoPopupHelper.js" asp-append-version="true"></script>
+    <script src="~/js/helpers/EmojiPopupHelper.js" asp-append-version="true"></script>
+    <script src="~/js/helpers/LinkPopupHelper.js" asp-append-version="true"></script>
     <script>
         const ctx = {};
 
