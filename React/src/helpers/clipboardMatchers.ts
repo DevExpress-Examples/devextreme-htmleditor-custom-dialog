@@ -1,9 +1,9 @@
 type DeltaOp = { insert: string | Record<string, string> };
 type ClipboardDelta = { ops: DeltaOp[] };
 
-type ClipboardMatcher = [string, (node: HTMLElement, delta: ClipboardDelta) => ClipboardDelta];
+export type ClipboardMatcher = [string, (node: HTMLElement, delta: ClipboardDelta) => ClipboardDelta];
 
-type ClipboardConfig = {
+export type ClipboardConfig = {
   clipboard?: { matchers?: ClipboardMatcher[] };
 };
 

@@ -48,3 +48,38 @@ test('renders markup action button', () => {
   expect(markupButton).toBeInTheDocument();
 });
 
+test('renders emoji toolbar button', () => {
+  render(<App />);
+  expect(screen.getByText('😀')).toBeInTheDocument();
+});
+
+test('renders standard toolbar items', () => {
+  render(<App />);
+  expect(screen.getByText('undo')).toBeInTheDocument();
+  expect(screen.getByText('redo')).toBeInTheDocument();
+  expect(screen.getByText('bold')).toBeInTheDocument();
+  expect(screen.getByText('italic')).toBeInTheDocument();
+  expect(screen.getByText('strike')).toBeInTheDocument();
+  expect(screen.getByText('underline')).toBeInTheDocument();
+});
+
+test('renders alignment toolbar items', () => {
+  render(<App />);
+  expect(screen.getByText('alignLeft')).toBeInTheDocument();
+  expect(screen.getByText('alignCenter')).toBeInTheDocument();
+  expect(screen.getByText('alignRight')).toBeInTheDocument();
+  expect(screen.getByText('alignJustify')).toBeInTheDocument();
+});
+
+test('popups are hidden by default', () => {
+  render(<App />);
+  expect(screen.queryByText('Insert')).not.toBeInTheDocument();
+  expect(screen.queryByText('Insert Video')).not.toBeInTheDocument();
+});
+
+test('renders multiple separator items', () => {
+  render(<App />);
+  const separators = screen.getAllByText('separator');
+  expect(separators.length).toBeGreaterThanOrEqual(4);
+});
+
