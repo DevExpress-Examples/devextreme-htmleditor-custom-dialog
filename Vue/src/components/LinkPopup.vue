@@ -103,11 +103,11 @@ defineExpose({ show });
           @initialized="onTextEditorInitialized"
         >
           <DxToolbar>
-            <DxItem name="bold" />
-            <DxItem name="italic" />
-            <DxItem name="underline" />
-            <DxItem name="strike" />
-            <DxItem name="color" />
+            <DxItem name="bold"/>
+            <DxItem name="italic"/>
+            <DxItem name="underline"/>
+            <DxItem name="strike"/>
+            <DxItem name="color"/>
           </DxToolbar>
         </DxHtmlEditor>
 

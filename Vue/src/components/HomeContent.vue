@@ -61,25 +61,25 @@ const headerAcceptedValues = [false, 1, 2, 3, 4, 5];
       @initialized="onEditorInitialized"
     >
       <DxToolbar>
-        <DxItem name="undo" />
-        <DxItem name="redo" />
-        <DxItem name="separator" />
+        <DxItem name="undo"/>
+        <DxItem name="redo"/>
+        <DxItem name="separator"/>
         <DxItem
           name="header"
           :accepted-values="headerAcceptedValues"
           :options="{ inputAttr: { 'aria-label': 'Header' } }"
         />
-        <DxItem name="separator" />
-        <DxItem name="bold" />
-        <DxItem name="italic" />
-        <DxItem name="strike" />
-        <DxItem name="underline" />
-        <DxItem name="separator" />
-        <DxItem name="alignLeft" />
-        <DxItem name="alignCenter" />
-        <DxItem name="alignRight" />
-        <DxItem name="alignJustify" />
-        <DxItem name="separator" />
+        <DxItem name="separator"/>
+        <DxItem name="bold"/>
+        <DxItem name="italic"/>
+        <DxItem name="strike"/>
+        <DxItem name="underline"/>
+        <DxItem name="separator"/>
+        <DxItem name="alignLeft"/>
+        <DxItem name="alignCenter"/>
+        <DxItem name="alignRight"/>
+        <DxItem name="alignJustify"/>
+        <DxItem name="separator"/>
         <DxItem
           widget="dxButton"
           :options="{
@@ -119,10 +119,22 @@ const headerAcceptedValues = [false, 1, 2, 3, 4, 5];
       </DxToolbar>
     </DxHtmlEditor>
 
-    <EmojiPopup ref="emojiPopupRef" :editor="editorInstance" />
-    <VideoPopup ref="videoPopupRef" :editor="editorInstance" />
-    <LinkPopup ref="linkPopupRef" :editor="editorInstance" />
-    <MarkupPopup ref="markupPopupRef" :editor="editorInstance" />
+    <EmojiPopup
+      ref="emojiPopupRef"
+      :editor="editorInstance"
+    />
+    <VideoPopup
+      ref="videoPopupRef"
+      :editor="editorInstance"
+    />
+    <LinkPopup
+      ref="linkPopupRef"
+      :editor="editorInstance"
+    />
+    <MarkupPopup
+      ref="markupPopupRef"
+      :editor="editorInstance"
+    />
   </div>
 </template>
 
