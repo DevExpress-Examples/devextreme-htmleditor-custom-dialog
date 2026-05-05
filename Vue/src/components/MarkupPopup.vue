@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import DxPopup from 'devextreme-vue/popup';
+import { useMarkupPopup } from '../composables/useMarkupPopup';
 
 const props = defineProps<{
   editor: any;
 }>();
 
-const visible = ref(false);
-const markupContent = ref('');
-
-function show() {
-  markupContent.value = props.editor?.option('value') || '';
-  visible.value = true;
-}
+const { visible, markupContent, show } = useMarkupPopup(() => props.editor);
 
 defineExpose({ show });
 </script>

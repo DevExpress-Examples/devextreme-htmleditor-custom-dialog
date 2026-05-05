@@ -1,36 +1,20 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import DxPopover from 'devextreme-vue/popover';
 import DxTextBox from 'devextreme-vue/text-box';
-import { EMOJI_LIST, type EmojiItem } from '../data/emojiList';
+import { useEmojiPopup } from '../composables/useEmojiPopup';
 
 const props = defineProps<{
   editor: any;
 }>();
 
-const visible = ref(false);
-const searchValue = ref('');
-const insertIndex = ref(0);
-const target = ref<HTMLElement | null>(null);
-
-const filteredEmojis = computed(() => {
-  const term = searchValue.value.toLowerCase().trim();
-  if (!term) return EMOJI_LIST;
-  return EMOJI_LIST.filter((e) => e.terms.includes(term));
-});
-
-function show(cursorIndex: number, targetElement: HTMLElement) {
-  insertIndex.value = cursorIndex;
-  searchValue.value = '';
-  target.value = targetElement;
-  visible.value = true;
-}
-
-function insertEmoji(emoji: EmojiItem) {
-  visible.value = false;
-  props.editor.insertText(insertIndex.value, emoji.char);
-  props.editor.setSelection(insertIndex.value + emoji.char.length, 0);
-}
+const {
+  visible,
+  searchValue,
+  target,
+  filteredEmojis,
+  show,
+  insertEmoji,
+} = useEmojiPopup(() => props.editor);
 
 defineExpose({ show });
 </script>

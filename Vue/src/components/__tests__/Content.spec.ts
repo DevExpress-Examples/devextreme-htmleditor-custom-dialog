@@ -6,6 +6,10 @@ import LinkPopup from '../LinkPopup.vue';
 import MarkupPopup from '../MarkupPopup.vue';
 import HomeContent from '../HomeContent.vue';
 import { EMOJI_LIST } from '../../data/emojiList';
+import { useEmojiPopup } from '../../composables/useEmojiPopup';
+import { useVideoPopup, setupClipboard } from '../../composables/useVideoPopup';
+import { useLinkPopup } from '../../composables/useLinkPopup';
+import { useMarkupPopup } from '../../composables/useMarkupPopup';
 
 function createMockEditor() {
   return {
@@ -42,130 +46,128 @@ describe('HomeContent', () => {
   });
 });
 
-describe('EmojiPopup', () => {
+describe('useEmojiPopup', () => {
   let editor: ReturnType<typeof createMockEditor>;
 
   beforeEach(() => {
     editor = createMockEditor();
   });
 
-  it('is hidden by default', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
-    expect((wrapper.vm as any).visible).toBe(false);
+  it('starts with visible=false', () => {
+    const { visible } = useEmojiPopup(() => editor);
+    expect(visible.value).toBe(false);
   });
 
   it('show() sets visible and stores cursor index', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
+    const { visible, insertIndex, show } = useEmojiPopup(() => editor);
     const targetEl = document.createElement('button');
 
-    (wrapper.vm as any).show(7, targetEl);
+    show(7, targetEl);
 
-    expect((wrapper.vm as any).visible).toBe(true);
-    expect((wrapper.vm as any).insertIndex).toBe(7);
+    expect(visible.value).toBe(true);
+    expect(insertIndex.value).toBe(7);
   });
 
   it('show() resets the search value', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
-    (wrapper.vm as any).searchValue = 'fire';
+    const { searchValue, show } = useEmojiPopup(() => editor);
+    searchValue.value = 'fire';
 
-    (wrapper.vm as any).show(0, document.createElement('button'));
+    show(0, document.createElement('button'));
 
-    expect((wrapper.vm as any).searchValue).toBe('');
+    expect(searchValue.value).toBe('');
   });
 
   it('filteredEmojis returns all emojis when search is empty', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
-    expect((wrapper.vm as any).filteredEmojis).toHaveLength(EMOJI_LIST.length);
+    const { filteredEmojis } = useEmojiPopup(() => editor);
+    expect(filteredEmojis.value).toHaveLength(EMOJI_LIST.length);
   });
 
   it('filteredEmojis filters by search term', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
-    (wrapper.vm as any).searchValue = 'fire';
-    expect((wrapper.vm as any).filteredEmojis).toHaveLength(1);
-    expect((wrapper.vm as any).filteredEmojis[0].char).toBe('🔥');
+    const { filteredEmojis, searchValue } = useEmojiPopup(() => editor);
+    searchValue.value = 'fire';
+    expect(filteredEmojis.value).toHaveLength(1);
+    expect(filteredEmojis.value[0].char).toBe('🔥');
   });
 
   it('insertEmoji calls editor.insertText and setSelection', () => {
-    const wrapper = shallowMount(EmojiPopup, { props: { editor } });
-    (wrapper.vm as any).show(3, document.createElement('button'));
+    const { visible, show, insertEmoji } = useEmojiPopup(() => editor);
+    show(3, document.createElement('button'));
 
-    (wrapper.vm as any).insertEmoji({ char: '🚀', terms: 'rocket' });
+    insertEmoji({ char: '🚀', terms: 'rocket' });
 
     expect(editor.insertText).toHaveBeenCalledWith(3, '🚀');
     expect(editor.setSelection).toHaveBeenCalledWith(3 + '🚀'.length, 0);
-    expect((wrapper.vm as any).visible).toBe(false);
+    expect(visible.value).toBe(false);
   });
 });
 
-describe('VideoPopup', () => {
+describe('useVideoPopup', () => {
   let editor: ReturnType<typeof createMockEditor>;
 
   beforeEach(() => {
     editor = createMockEditor();
   });
 
-  it('is hidden by default', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
-    expect((wrapper.vm as any).visible).toBe(false);
+  it('starts with visible=false', () => {
+    const { visible } = useVideoPopup(() => editor);
+    expect(visible.value).toBe(false);
   });
 
-  it('show() opens in insert mode', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
+  it('show() opens and sets cursor position', () => {
+    const { visible, insertIndex, selectionLength, show } = useVideoPopup(() => editor);
 
-    (wrapper.vm as any).show(5, 0);
+    show(5, 0);
 
-    expect((wrapper.vm as any).visible).toBe(true);
-    expect((wrapper.vm as any).insertIndex).toBe(5);
-    expect((wrapper.vm as any).selectionLength).toBe(0);
+    expect(visible.value).toBe(true);
+    expect(insertIndex.value).toBe(5);
+    expect(selectionLength.value).toBe(0);
   });
 
-  it('applyVideo does nothing when finalVideoUrl is empty', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
+  it('applyVideo does nothing when no URL is set', () => {
+    const { show, applyVideo } = useVideoPopup(() => editor);
 
-    (wrapper.vm as any).show(0, 0);
-    (wrapper.vm as any).applyVideo();
+    show(0, 0);
+    applyVideo();
 
     expect(editor.insertEmbed).not.toHaveBeenCalled();
   });
 
   it('applyVideo inserts video embed for URLs', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
+    const { visible, show, onUrlChanged, applyVideo } = useVideoPopup(() => editor);
 
-    (wrapper.vm as any).show(3, 0);
-    (wrapper.vm as any).onUrlChanged({ value: 'https://youtube.com/embed/test' });
-    (wrapper.vm as any).applyVideo();
+    show(3, 0);
+    onUrlChanged({ value: 'https://youtube.com/embed/test' });
+    applyVideo();
 
     expect(editor.insertEmbed).toHaveBeenCalledWith(3, 'video', 'https://youtube.com/embed/test');
     expect(editor.insertText).toHaveBeenCalledWith(4, '\n');
     expect(editor.setSelection).toHaveBeenCalledWith(5, 0);
-    expect((wrapper.vm as any).visible).toBe(false);
+    expect(visible.value).toBe(false);
   });
 
   it('applyVideo deletes existing selection before inserting', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
+    const { show, onUrlChanged, applyVideo } = useVideoPopup(() => editor);
 
-    (wrapper.vm as any).show(2, 3);
-    (wrapper.vm as any).onUrlChanged({ value: 'https://vimeo.com/123' });
-    (wrapper.vm as any).applyVideo();
+    show(2, 3);
+    onUrlChanged({ value: 'https://vimeo.com/123' });
+    applyVideo();
 
     expect(editor.delete).toHaveBeenCalledWith(2, 3);
     expect(editor.insertEmbed).toHaveBeenCalled();
   });
 
   it('setupClipboard adds clipboard matchers', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
     const config = { clipboard: { matchers: [] as any[] } };
 
-    (wrapper.vm as any).setupClipboard(config);
+    setupClipboard(config);
 
     expect(config.clipboard.matchers).toHaveLength(3);
   });
 
   it('clipboard matcher for anchor detects youtube links', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
     const config = { clipboard: { matchers: [] as any[] } };
 
-    (wrapper.vm as any).setupClipboard(config);
+    setupClipboard(config);
 
     const [, anchorHandler] = config.clipboard.matchers[0];
     const node = { href: 'https://www.youtube.com/watch?v=abc', hostname: 'www.youtube.com' };
@@ -176,10 +178,9 @@ describe('VideoPopup', () => {
   });
 
   it('clipboard matcher for anchor detects direct video files', () => {
-    const wrapper = shallowMount(VideoPopup, { props: { editor } });
     const config = { clipboard: { matchers: [] as any[] } };
 
-    (wrapper.vm as any).setupClipboard(config);
+    setupClipboard(config);
 
     const [, anchorHandler] = config.clipboard.matchers[0];
     const node = { href: 'https://example.com/video.mp4', hostname: 'example.com' };
@@ -190,78 +191,78 @@ describe('VideoPopup', () => {
   });
 });
 
-describe('LinkPopup', () => {
+describe('useLinkPopup', () => {
   let editor: ReturnType<typeof createMockEditor>;
 
   beforeEach(() => {
     editor = createMockEditor();
   });
 
-  it('is hidden by default', () => {
-    const wrapper = shallowMount(LinkPopup, { props: { editor } });
-    expect((wrapper.vm as any).visible).toBe(false);
+  it('starts with visible=false', () => {
+    const { visible } = useLinkPopup(() => editor);
+    expect(visible.value).toBe(false);
   });
 
   it('show() sets insert index and selection length', () => {
-    const wrapper = shallowMount(LinkPopup, { props: { editor } });
+    const { visible, insertIndex, selectionLength, show } = useLinkPopup(() => editor);
 
-    (wrapper.vm as any).show(4, 3);
+    show(4, 3);
 
-    expect((wrapper.vm as any).visible).toBe(true);
-    expect((wrapper.vm as any).insertIndex).toBe(4);
-    expect((wrapper.vm as any).selectionLength).toBe(3);
+    expect(visible.value).toBe(true);
+    expect(insertIndex.value).toBe(4);
+    expect(selectionLength.value).toBe(3);
   });
 
   it('show() loads existing link URL from selection formats', () => {
     editor.getFormat.mockReturnValue({ link: 'https://example.com', bold: true });
 
-    const wrapper = shallowMount(LinkPopup, { props: { editor } });
+    const { urlValue, show } = useLinkPopup(() => editor);
 
-    (wrapper.vm as any).show(0, 5);
+    show(0, 5);
 
-    expect((wrapper.vm as any).urlValue).toBe('https://example.com');
+    expect(urlValue.value).toBe('https://example.com');
   });
 
   it('show() resets URL when no link in selection', () => {
     editor.getFormat.mockReturnValue({ bold: true });
 
-    const wrapper = shallowMount(LinkPopup, { props: { editor } });
-    (wrapper.vm as any).urlValue = 'old-url';
+    const { urlValue, show } = useLinkPopup(() => editor);
+    urlValue.value = 'old-url';
 
-    (wrapper.vm as any).show(0, 0);
+    show(0, 0);
 
-    expect((wrapper.vm as any).urlValue).toBe('');
+    expect(urlValue.value).toBe('');
   });
 });
 
-describe('MarkupPopup', () => {
+describe('useMarkupPopup', () => {
   let editor: ReturnType<typeof createMockEditor>;
 
   beforeEach(() => {
     editor = createMockEditor();
   });
 
-  it('is hidden by default', () => {
-    const wrapper = shallowMount(MarkupPopup, { props: { editor } });
-    expect((wrapper.vm as any).visible).toBe(false);
+  it('starts with visible=false', () => {
+    const { visible } = useMarkupPopup(() => editor);
+    expect(visible.value).toBe(false);
   });
 
   it('show() reads markup from editor and sets visible', () => {
-    const wrapper = shallowMount(MarkupPopup, { props: { editor } });
+    const { visible, markupContent, show } = useMarkupPopup(() => editor);
 
-    (wrapper.vm as any).show();
+    show();
 
-    expect((wrapper.vm as any).visible).toBe(true);
-    expect((wrapper.vm as any).markupContent).toBe('<p>Test markup</p>');
+    expect(visible.value).toBe(true);
+    expect(markupContent.value).toBe('<p>Test markup</p>');
     expect(editor.option).toHaveBeenCalledWith('value');
   });
 
   it('show() handles null editor gracefully', () => {
-    const wrapper = shallowMount(MarkupPopup, { props: { editor: null } });
+    const { visible, markupContent, show } = useMarkupPopup(() => null);
 
-    (wrapper.vm as any).show();
+    show();
 
-    expect((wrapper.vm as any).visible).toBe(true);
-    expect((wrapper.vm as any).markupContent).toBe('');
+    expect(visible.value).toBe(true);
+    expect(markupContent.value).toBe('');
   });
 });

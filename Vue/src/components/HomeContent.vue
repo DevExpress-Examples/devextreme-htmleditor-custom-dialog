@@ -8,6 +8,7 @@ import EmojiPopup from './EmojiPopup.vue';
 import VideoPopup from './VideoPopup.vue';
 import LinkPopup from './LinkPopup.vue';
 import MarkupPopup from './MarkupPopup.vue';
+import { setupClipboard, registerBlot } from '../composables/useVideoPopup';
 import markup from '../data/markup';
 
 const editorInstance = shallowRef<any>(null);
@@ -19,11 +20,11 @@ const markupPopupRef = ref<ComponentPublicInstance<typeof MarkupPopup> | null>(n
 
 function onEditorInitialized(e: any) {
   editorInstance.value = e.component;
-  (videoPopupRef.value as any)?.registerBlot(editorInstance.value);
+  registerBlot(editorInstance.value);
 }
 
 function customizeModules(config: any) {
-  (videoPopupRef.value as any)?.setupClipboard(config);
+  setupClipboard(config);
 }
 
 function onLinkClick() {
