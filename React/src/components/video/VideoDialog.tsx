@@ -9,9 +9,10 @@ import type { VideoDialogProps } from './types';
 
 const EMPTY_FILE_ARRAY: File[] = [];
 
+const videoApplyButtonAttrs = { class: 'video-apply-button' }
+
 function VideoDialog({
   isVisible,
-  mode,
   url,
   videoFile,
   onApply,
@@ -19,9 +20,6 @@ function VideoDialog({
   onHide,
   onUrlChange,
 }: VideoDialogProps): JSX.Element {
-  const title = mode === 'edit' ? 'Edit Video' : 'Insert Video';
-  const applyButtonText = mode === 'edit' ? 'Apply Changes' : 'Insert Video';
-
   const uploaderValue = useMemo(
     () => (videoFile ? [videoFile] : EMPTY_FILE_ARRAY),
     [videoFile],
@@ -40,7 +38,7 @@ function VideoDialog({
   return (
     <Popup
       showTitle
-      title={title}
+      title="Insert Video"
       width={450}
       height={320}
       deferRendering={false}
@@ -65,8 +63,8 @@ function VideoDialog({
           onValueChanged={handleFileChange}
         />
         <Button
-          elementAttr={{ class: 'video-apply-button' }}
-          text={applyButtonText}
+          elementAttr={videoApplyButtonAttrs}
+          text="Insert"
           type="default"
           width="100%"
           onClick={onApply}
