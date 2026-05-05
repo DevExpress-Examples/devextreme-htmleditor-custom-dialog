@@ -3,7 +3,7 @@ import Popover from 'devextreme-react/popover';
 import TextBox from 'devextreme-react/text-box';
 import type { ValueChangedEvent } from 'devextreme/ui/text_box';
 import type { EmojiPopoverProps } from './types';
-import EmojiButton from './EmojiButton';
+import EmojiButton from './EmojiButton.tsx';
 
 function EmojiPopover({
   filteredEmoji,

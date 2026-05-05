@@ -1,5 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
-import type { EditorRef, EditorSelection, DeltaContent, VideoDialogState } from '../types/editor';
+import type {
+  EditorRef, EditorSelection, DeltaContent, VideoDialogState,
+} from '../types/editor';
 
 export type UseVideoDialogResult = {
   state: VideoDialogState;
@@ -117,5 +119,7 @@ export function useVideoDialog(
     setVideoFile(null);
   }, [editorRef]);
 
-  return { state, videoFile, apply, handleFileChange, hide, setUrl, show };
+  return {
+    state, videoFile, apply, handleFileChange, hide, setUrl, show,
+  };
 }

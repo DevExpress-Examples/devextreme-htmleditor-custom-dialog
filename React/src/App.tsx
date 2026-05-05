@@ -8,7 +8,9 @@ import { useEditorSetup } from './hooks/useEditorSetup';
 import { useEmojiPopover } from './hooks/useEmojiPopover';
 import { useLinkDialog } from './hooks/useLinkDialog';
 import { useVideoDialog } from './hooks/useVideoDialog';
-import { EmojiPopover, LinkDialog, MarkupPopup, VideoDialog } from './components';
+import {
+  EmojiPopover, LinkDialog, MarkupPopup, VideoDialog,
+} from './components';
 
 const HEADER_VALUES = [false, 1, 2, 3, 4, 5] as (boolean | number)[];
 const HEADER_OPTIONS = { inputAttr: { 'aria-label': 'Header' } } as const;

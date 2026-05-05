@@ -1,4 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
+import {
+  describe, expect, it, vi,
+} from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { useEmojiPopover } from './useEmojiPopover';
 import { EMOJI_LIST } from '../data/emojiList';

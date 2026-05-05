@@ -1,4 +1,6 @@
-import { describe, expect, it, vi, beforeEach } from 'vitest';
+import {
+  describe, expect, it, vi, beforeEach,
+} from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { useVideoDialog } from './useVideoDialog';
 import type { EditorRef } from '../types/editor';

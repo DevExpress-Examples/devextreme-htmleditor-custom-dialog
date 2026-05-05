@@ -15,6 +15,7 @@ const IFRAME_ATTRS = ['width', 'height', 'frameborder', 'allow', 'allowfullscree
 function buildEnhancedVideoBlot(VideoFormat: ParchmentBlot): ParchmentBlot {
   class EnhancedVideoBlot extends (VideoFormat as unknown as BlotBase) {
     declare domNode: Element;
+
     declare value: () => string | Record<string, unknown>;
 
     html(): string {

@@ -5,7 +5,7 @@ function preventBlur(event: React.MouseEvent): void {
   event.preventDefault();
 }
 
-const EmojiButton = memo(function EmojiButton({ emoji, onInsert }: EmojiButtonProps) {
+const EmojiButton = memo(({ emoji, onInsert }: EmojiButtonProps) => {
   const handleClick = useCallback(() => {
     onInsert(emoji.char);
   }, [onInsert, emoji.char]);
@@ -21,5 +21,7 @@ const EmojiButton = memo(function EmojiButton({ emoji, onInsert }: EmojiButtonPr
     </button>
   );
 });
+
+EmojiButton.displayName = 'EmojiButton';
 
 export default EmojiButton;

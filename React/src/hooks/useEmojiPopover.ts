@@ -1,4 +1,6 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  useCallback, useMemo, useRef, useState,
+} from 'react';
 import { EMOJI_LIST } from '../data/emojiList';
 import type { EmojiItem } from '../data/emojiList';
 import type { EditorRef, EditorSelection } from '../types/editor';
@@ -51,5 +53,7 @@ export function useEmojiPopover(
     setIsVisible(false);
   }, [editorRef]);
 
-  return { filteredEmoji, isVisible, searchTerm, target, hide, insertEmoji, setSearch, show };
+  return {
+    filteredEmoji, isVisible, searchTerm, target, hide, insertEmoji, setSearch, show,
+  };
 }

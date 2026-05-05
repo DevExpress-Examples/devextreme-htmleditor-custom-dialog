@@ -1,4 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
+import {
+  describe, expect, it, vi,
+} from 'vitest';
 import { act, renderHook } from '@testing-library/react';
 import { useLinkDialog } from './useLinkDialog';
 import type { EditorRef } from '../types/editor';

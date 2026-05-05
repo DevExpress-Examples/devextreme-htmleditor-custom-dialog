@@ -6,7 +6,7 @@ import TextBox from 'devextreme-react/text-box';
 import type { ValueChangedEvent } from 'devextreme/ui/text_box';
 import type { LinkDialogProps } from './types';
 
-const linkApplyButtonAttrs = { class: 'link-apply-button' }
+const linkApplyButtonAttrs = { class: 'link-apply-button' };
 
 function LinkDialog({
   isVisible,

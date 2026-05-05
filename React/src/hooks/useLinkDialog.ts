@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
 import type dxHtmlEditor from 'devextreme/ui/html_editor';
 import type { InitializedEvent } from 'devextreme/ui/html_editor';
 import type { EditorRef, EditorSelection, LinkDialogState } from '../types/editor';
@@ -41,7 +43,9 @@ export function useLinkDialog(
 
     delete selectedFormats.link;
 
-    setState({ index, isVisible: true, length, selectedFormats, selectedText, url: link });
+    setState({
+      index, isVisible: true, length, selectedFormats, selectedText, url: link,
+    });
   }, [editorRef, getSelectionOrEnd]);
 
   const hide = useCallback(() => {
@@ -92,5 +96,7 @@ export function useLinkDialog(
     }
   }, [state.isVisible, state.selectedText, state.selectedFormats]);
 
-  return { state, apply, handleLinkEditorInitialized, hide, setUrl, show };
+  return {
+    state, apply, handleLinkEditorInitialized, hide, setUrl, show,
+  };
 }

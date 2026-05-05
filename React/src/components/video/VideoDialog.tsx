@@ -9,7 +9,7 @@ import type { VideoDialogProps } from './types';
 
 const EMPTY_FILE_ARRAY: File[] = [];
 
-const videoApplyButtonAttrs = { class: 'video-apply-button' }
+const videoApplyButtonAttrs = { class: 'video-apply-button' };
 
 function VideoDialog({
   isVisible,
