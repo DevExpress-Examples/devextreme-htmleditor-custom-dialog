@@ -2,7 +2,12 @@ import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
 import type { HtmlEditorTypes } from 'devextreme-react/html-editor';
-import type { EditorInstance, EditorRef, EditorSelection, LinkDialogState } from '../types/editor';
+import type {
+  EditorInstance,
+  EditorRef,
+  EditorSelection,
+  LinkDialogState,
+} from '../types/editor';
 
 export type UseLinkDialogResult = {
   state: LinkDialogState;

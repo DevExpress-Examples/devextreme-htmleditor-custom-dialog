@@ -1,8 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 import Button from 'devextreme-react/button';
-import FileUploader, {type FileUploaderTypes} from 'devextreme-react/file-uploader';
+import FileUploader, { type FileUploaderTypes } from 'devextreme-react/file-uploader';
 import Popup from 'devextreme-react/popup';
-import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
+import TextBox, { type TextBoxTypes } from 'devextreme-react/text-box';
 import type { VideoDialogProps } from './types';
 
 const EMPTY_FILE_ARRAY: File[] = [];

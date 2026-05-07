@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import Button from 'devextreme-react/button';
 import HtmlEditor, { Item, Toolbar } from 'devextreme-react/html-editor';
 import Popup from 'devextreme-react/popup';
-import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
+import TextBox, { type TextBoxTypes } from 'devextreme-react/text-box';
 import type { LinkDialogProps } from './types';
 
 const linkApplyButtonAttrs = { class: 'link-apply-button' };

@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import Popover from 'devextreme-react/popover';
-import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
+import TextBox, { type TextBoxTypes } from 'devextreme-react/text-box';
 import type { EmojiPopoverProps } from './types';
 import EmojiButton from './EmojiButton.tsx';
 
