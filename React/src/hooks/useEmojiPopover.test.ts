@@ -15,7 +15,7 @@ function createMockEditor() {
 
 function setup(editorOverrides = {}) {
   const editor = { ...createMockEditor(), ...editorOverrides };
-  const editorRef = { current: editor } as unknown as EditorRef;
+  const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
   const getSelectionOrEnd = vi.fn(() => ({ index: 5, length: 0 }));
 
   const { result } = renderHook(() => useEmojiPopover(editorRef, getSelectionOrEnd));

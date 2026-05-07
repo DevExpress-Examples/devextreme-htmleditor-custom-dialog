@@ -19,7 +19,7 @@ function createMockEditor(contentOverride?: unknown) {
 
 function setup(editorOverrides = {}, selectionOverride = { index: 5, length: 0 }) {
   const editor = { ...createMockEditor(), ...editorOverrides };
-  const editorRef = { current: editor } as unknown as EditorRef;
+  const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
   const getSelectionOrEnd = vi.fn(() => selectionOverride);
 
   const { result } = renderHook(() => useVideoDialog(editorRef, getSelectionOrEnd));
@@ -66,7 +66,7 @@ describe('useVideoDialog', () => {
     it('opens in edit mode when an existing video is selected', () => {
       const content = { ops: [{ insert: { video: 'https://youtube.com/watch?v=abc' } }] };
       const editor = createMockEditor(content);
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 3, length: 1 }));
 
       const { result } = renderHook(() => useVideoDialog(editorRef, getSelectionOrEnd));
@@ -80,7 +80,7 @@ describe('useVideoDialog', () => {
     it('opens in edit mode for nativeVideo', () => {
       const content = { ops: [{ insert: { nativeVideo: 'blob:http://localhost/abc' } }] };
       const editor = createMockEditor(content);
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 0, length: 1 }));
 
       const { result } = renderHook(() => useVideoDialog(editorRef, getSelectionOrEnd));

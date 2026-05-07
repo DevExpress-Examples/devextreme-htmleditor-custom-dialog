@@ -20,7 +20,7 @@ function createMockEditor(overrides = {}) {
 
 function setup(editorOverrides = {}, selectionOverride = { index: 0, length: 0 }) {
   const editor = createMockEditor(editorOverrides);
-  const editorRef = { current: editor } as unknown as EditorRef;
+  const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
   const getSelectionOrEnd = vi.fn(() => selectionOverride);
 
   const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -63,7 +63,7 @@ describe('useLinkDialog', () => {
         getText: vi.fn(() => 'link text'),
         getFormat: vi.fn(() => ({ bold: true, link: 'https://example.com' })),
       });
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 2, length: 9 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -119,7 +119,7 @@ describe('useLinkDialog', () => {
   describe('apply', () => {
     it('inserts link with URL as text when link editor is empty', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 3, length: 0 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -148,7 +148,7 @@ describe('useLinkDialog', () => {
 
     it('inserts link with custom text from link editor', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 0, length: 0 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -177,7 +177,7 @@ describe('useLinkDialog', () => {
 
     it('deletes existing selection before inserting', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 2, length: 4 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -202,7 +202,7 @@ describe('useLinkDialog', () => {
 
     it('sets selection after inserted text', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 0, length: 0 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -227,7 +227,7 @@ describe('useLinkDialog', () => {
 
     it('hides dialog after applying', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 0, length: 0 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
@@ -252,7 +252,7 @@ describe('useLinkDialog', () => {
 
     it('does nothing when URL is empty', () => {
       const editor = createMockEditor();
-      const editorRef = { current: editor } as unknown as EditorRef;
+      const editorRef = { current: { instance: () => editor } } as unknown as EditorRef;
       const getSelectionOrEnd = vi.fn(() => ({ index: 0, length: 0 }));
 
       const { result } = renderHook(() => useLinkDialog(editorRef, getSelectionOrEnd));
