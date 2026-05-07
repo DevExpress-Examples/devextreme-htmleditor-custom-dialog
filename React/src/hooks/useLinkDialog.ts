@@ -1,14 +1,13 @@
 import {
   useCallback, useEffect, useRef, useState,
 } from 'react';
-import type dxHtmlEditor from 'devextreme/ui/html_editor';
-import type { InitializedEvent } from 'devextreme/ui/html_editor';
-import type { EditorRef, EditorSelection, LinkDialogState } from '../types/editor';
+import type { HtmlEditorTypes } from 'devextreme-react/html-editor';
+import type { EditorInstance, EditorRef, EditorSelection, LinkDialogState } from '../types/editor';
 
 export type UseLinkDialogResult = {
   state: LinkDialogState;
   apply: () => void;
-  handleLinkEditorInitialized: (event: InitializedEvent) => void;
+  handleLinkEditorInitialized: (event: HtmlEditorTypes.InitializedEvent) => void;
   hide: () => void;
   setUrl: (url: string) => void;
   show: () => void;
@@ -28,12 +27,12 @@ export function useLinkDialog(
   getSelectionOrEnd: () => EditorSelection,
 ): UseLinkDialogResult {
   const [state, setState] = useState<LinkDialogState>(INITIAL_STATE);
-  const linkTextEditorRef = useRef<dxHtmlEditor | null>(null);
+  const linkTextEditorRef = useRef<EditorInstance | null>(null);
   const stateRef = useRef(state);
   stateRef.current = state;
 
   const show = useCallback(() => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     if (!editor) return;
 
     const { index, length } = getSelectionOrEnd();
@@ -56,14 +55,14 @@ export function useLinkDialog(
     setState((prev) => ({ ...prev, url }));
   }, []);
 
-  const handleLinkEditorInitialized = useCallback((event: InitializedEvent) => {
+  const handleLinkEditorInitialized = useCallback((event: HtmlEditorTypes.InitializedEvent) => {
     if (event.component) {
       linkTextEditorRef.current = event.component;
     }
   }, []);
 
   const apply = useCallback(() => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     const linkEditor = linkTextEditorRef.current;
     const currentState = stateRef.current;
 

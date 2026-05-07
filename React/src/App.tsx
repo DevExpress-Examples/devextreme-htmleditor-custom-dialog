@@ -25,7 +25,7 @@ function App(): JSX.Element {
   const videoDialog = useVideoDialog(editorRef, getSelectionOrEnd);
 
   const openMarkupPopup = useCallback(() => {
-    const currentEditorValue = editorRef.current?.option('value');
+    const currentEditorValue = editorRef.current?.instance().option('value');
     const nextMarkupValue = typeof currentEditorValue === 'string'
       ? currentEditorValue
       : INITIAL_MARKUP;
@@ -66,6 +66,7 @@ function App(): JSX.Element {
   return (
     <div className="demo-container">
       <HtmlEditor
+        ref={editorRef}
         height={500}
         defaultValue={INITIAL_MARKUP}
         onInitialized={handleEditorInitialized}

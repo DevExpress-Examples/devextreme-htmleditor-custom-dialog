@@ -2,8 +2,7 @@ import { memo, useCallback } from 'react';
 import Button from 'devextreme-react/button';
 import HtmlEditor, { Item, Toolbar } from 'devextreme-react/html-editor';
 import Popup from 'devextreme-react/popup';
-import TextBox from 'devextreme-react/text-box';
-import type { ValueChangedEvent } from 'devextreme/ui/text_box';
+import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
 import type { LinkDialogProps } from './types';
 
 const linkApplyButtonAttrs = { class: 'link-apply-button' };
@@ -17,7 +16,7 @@ function LinkDialog({
   onUrlChange,
 }: LinkDialogProps): JSX.Element {
   const handleUrlChange = useCallback(
-    (event: ValueChangedEvent) => onUrlChange(event.value ?? ''),
+    (event: TextBoxTypes.ValueChangedEvent) => onUrlChange(event.value ?? ''),
     [onUrlChange],
   );
 

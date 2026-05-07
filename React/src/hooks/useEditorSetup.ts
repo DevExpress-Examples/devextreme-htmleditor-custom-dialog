@@ -1,23 +1,20 @@
 import { useCallback, useRef } from 'react';
-import type dxHtmlEditor from 'devextreme/ui/html_editor';
-import type { InitializedEvent } from 'devextreme/ui/html_editor';
+import type { HtmlEditorRef, HtmlEditorTypes } from 'devextreme-react/html-editor';
 import { registerVideoBlots } from '../helpers/videoBlots';
 import type { EditorRef, EditorSelection } from '../types/editor';
 
 export type UseEditorSetupResult = {
   editorRef: EditorRef;
   getSelectionOrEnd: () => EditorSelection;
-  handleEditorInitialized: (event: InitializedEvent) => void;
+  handleEditorInitialized: (event: HtmlEditorTypes.InitializedEvent) => void;
 };
 
 export function useEditorSetup(): UseEditorSetupResult {
-  const editorRef = useRef<dxHtmlEditor | null>(null);
+  const editorRef = useRef<HtmlEditorRef | null>(null);
   const blotsRegisteredRef = useRef(false);
 
-  const handleEditorInitialized = useCallback((event: InitializedEvent) => {
+  const handleEditorInitialized = useCallback((event: HtmlEditorTypes.InitializedEvent) => {
     if (!event.component) return;
-
-    editorRef.current = event.component;
 
     if (!blotsRegisteredRef.current) {
       registerVideoBlots(event.component);
@@ -26,7 +23,7 @@ export function useEditorSetup(): UseEditorSetupResult {
   }, []);
 
   const getSelectionOrEnd = useCallback((): EditorSelection => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     if (!editor) return { index: 0, length: 0 };
 
     return editor.getSelection() ?? { index: editor.getLength(), length: 0 };

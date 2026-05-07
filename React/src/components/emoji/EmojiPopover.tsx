@@ -1,7 +1,6 @@
 import { memo, useCallback } from 'react';
 import Popover from 'devextreme-react/popover';
-import TextBox from 'devextreme-react/text-box';
-import type { ValueChangedEvent } from 'devextreme/ui/text_box';
+import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
 import type { EmojiPopoverProps } from './types';
 import EmojiButton from './EmojiButton.tsx';
 
@@ -15,7 +14,7 @@ function EmojiPopover({
   onSearchChange,
 }: EmojiPopoverProps): JSX.Element {
   const handleSearchChange = useCallback(
-    (event: ValueChangedEvent) => onSearchChange(event.value ?? ''),
+    (event: TextBoxTypes.ValueChangedEvent) => onSearchChange(event.value ?? ''),
     [onSearchChange],
   );
 

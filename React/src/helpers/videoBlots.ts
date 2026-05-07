@@ -1,4 +1,4 @@
-import type dxHtmlEditor from 'devextreme/ui/html_editor';
+import type { EditorInstance } from '../types/editor';
 
 type BlotBase = new () => Record<string, unknown>;
 
@@ -70,7 +70,7 @@ function buildNativeVideoBlot(BlockEmbed: ParchmentBlot): ParchmentBlot {
   return blot;
 }
 
-export function registerVideoBlots(editor: dxHtmlEditor): void {
+export function registerVideoBlots(editor: EditorInstance): void {
   const VideoFormat = editor.get('formats/video') as unknown as ParchmentBlot | undefined;
   const BlockEmbed = editor.get('blots/block/embed') as unknown as ParchmentBlot | undefined;
 

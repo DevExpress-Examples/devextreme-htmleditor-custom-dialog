@@ -44,7 +44,7 @@ export function useVideoDialog(
   }, []);
 
   const show = useCallback(() => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     if (!editor) return;
 
     const { index, length } = getSelectionOrEnd();
@@ -91,7 +91,7 @@ export function useVideoDialog(
   }, [revokePendingBlobUrl]);
 
   const apply = useCallback(() => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     if (!editor) return;
 
     const currentState = stateRef.current;

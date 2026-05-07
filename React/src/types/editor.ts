@@ -1,7 +1,8 @@
-import type { RefObject } from 'react';
-import type dxHtmlEditor from 'devextreme/ui/html_editor';
+import type { MutableRefObject } from 'react';
+import type { HtmlEditorRef } from 'devextreme-react/html-editor';
 
-export type EditorRef = RefObject<dxHtmlEditor | null>;
+export type EditorInstance = ReturnType<HtmlEditorRef['instance']>;
+export type EditorRef = MutableRefObject<HtmlEditorRef | null>;
 
 export type EditorSelection = {
   index: number;

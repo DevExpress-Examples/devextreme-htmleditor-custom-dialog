@@ -1,10 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 import Button from 'devextreme-react/button';
-import FileUploader from 'devextreme-react/file-uploader';
+import FileUploader, {type FileUploaderTypes} from 'devextreme-react/file-uploader';
 import Popup from 'devextreme-react/popup';
-import TextBox from 'devextreme-react/text-box';
-import type { ValueChangedEvent as TextBoxValueChangedEvent } from 'devextreme/ui/text_box';
-import type { ValueChangedEvent as FileUploaderValueChangedEvent } from 'devextreme/ui/file_uploader';
+import TextBox, {type TextBoxTypes} from 'devextreme-react/text-box';
 import type { VideoDialogProps } from './types';
 
 const EMPTY_FILE_ARRAY: File[] = [];
@@ -26,12 +24,12 @@ function VideoDialog({
   );
 
   const handleUrlChange = useCallback(
-    (event: TextBoxValueChangedEvent) => onUrlChange(event.value ?? ''),
+    (event: TextBoxTypes.ValueChangedEvent) => onUrlChange(event.value ?? ''),
     [onUrlChange],
   );
 
   const handleFileChange = useCallback(
-    (event: FileUploaderValueChangedEvent) => onFileChange(event.value?.[0] ?? null),
+    (event: FileUploaderTypes.ValueChangedEvent) => onFileChange(event.value?.[0] ?? null),
     [onFileChange],
   );
 

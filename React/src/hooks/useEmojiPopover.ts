@@ -44,7 +44,7 @@ export function useEmojiPopover(
   const setSearch = useCallback((term: string) => setSearchTerm(term), []);
 
   const insertEmoji = useCallback((char: string) => {
-    const editor = editorRef.current;
+    const editor = editorRef.current?.instance();
     if (!editor) return;
 
     const index = insertIndexRef.current;
