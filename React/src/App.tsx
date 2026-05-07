@@ -4,7 +4,7 @@ import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import HtmlEditor, { Item, Toolbar } from 'devextreme-react/html-editor';
 import { setupClipboard } from './helpers/clipboardMatchers';
 import { INITIAL_MARKUP } from './data/markup';
-import { useEditorSetup } from './hooks/useEditorSetup';
+import { useHtmlEditorInitializer } from './hooks/useEditorSetup';
 import { useEmojiPopover } from './hooks/useEmojiPopover';
 import { useLinkDialog } from './hooks/useLinkDialog';
 import { useVideoDialog } from './hooks/useVideoDialog';
@@ -19,7 +19,7 @@ function App(): JSX.Element {
   const [markupValue, setMarkupValue] = useState(INITIAL_MARKUP);
   const [isMarkupVisible, setIsMarkupVisible] = useState(false);
 
-  const { editorRef, handleEditorInitialized, getSelectionOrEnd } = useEditorSetup();
+  const { editorRef, handleEditorInitialized, getSelectionOrEnd } = useHtmlEditorInitializer();
   const emojiPopover = useEmojiPopover(editorRef, getSelectionOrEnd);
   const linkDialog = useLinkDialog(editorRef, getSelectionOrEnd);
   const videoDialog = useVideoDialog(editorRef, getSelectionOrEnd);

@@ -3,13 +3,13 @@ import type { HtmlEditorRef, HtmlEditorTypes } from 'devextreme-react/html-edito
 import { registerVideoBlots } from '../helpers/videoBlots';
 import type { EditorRef, EditorSelection } from '../types/editor';
 
-export type UseEditorSetupResult = {
+export type UseHtmlEditorInitializerResult = {
   editorRef: EditorRef;
   getSelectionOrEnd: () => EditorSelection;
   handleEditorInitialized: (event: HtmlEditorTypes.InitializedEvent) => void;
 };
 
-export function useEditorSetup(): UseEditorSetupResult {
+export function useHtmlEditorInitializer(): UseHtmlEditorInitializerResult {
   const editorRef = useRef<HtmlEditorRef | null>(null);
   const blotsRegisteredRef = useRef(false);
 
