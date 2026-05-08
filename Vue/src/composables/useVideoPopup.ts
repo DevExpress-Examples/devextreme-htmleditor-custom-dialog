@@ -1,10 +1,52 @@
 import { ref, watch } from 'vue';
 
 const DIRECT_VIDEO_EXTENSION_REGEX = /\.(mp4|webm|ogg)$/i;
+const ALLOWED_EMBED_PROTOCOLS = new Set(['https:']);
+const ALLOWED_EMBED_HOSTS = new Set([
+  'youtube.com',
+  'www.youtube.com',
+  'm.youtube.com',
+  'youtu.be',
+  'www.youtu.be',
+  'youtube-nocookie.com',
+  'www.youtube-nocookie.com',
+  'player.vimeo.com',
+  'vimeo.com',
+  'www.vimeo.com',
+]);
 
 function isDirectVideoUrl(url: string) {
   const normalizedUrl = url.split(/[?#]/, 1)[0];
   return DIRECT_VIDEO_EXTENSION_REGEX.test(normalizedUrl);
+}
+
+function escapeHtmlAttribute(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function getSafeEmbedSrc(value: string | null) {
+  if (!value) {
+    return null;
+  }
+
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(value);
+  } catch {
+    return null;
+  }
+
+  const hostname = parsedUrl.hostname.toLowerCase();
+  if (!ALLOWED_EMBED_PROTOCOLS.has(parsedUrl.protocol) || !ALLOWED_EMBED_HOSTS.has(hostname)) {
+    return null;
+  }
+
+  return parsedUrl.toString();
 }
 
 export function useVideoPopup(editor: () => any) {
@@ -157,9 +199,14 @@ export function registerBlot(editorInstance: any) {
 
   class EnhancedVideoBlot extends VideoFormat {
     html() {
-      const src = typeof this.value() === 'string'
+      const srcValue = typeof this.value() === 'string'
         ? this.value()
         : this.domNode.getAttribute('src');
+
+      const safeSrc = getSafeEmbedSrc(srcValue);
+      if (!safeSrc) {
+        return '';
+      }
 
       const ATTRS = ['width', 'height', 'frameborder', 'allow', 'allowfullscreen'];
       let attrStr = '';
@@ -167,11 +214,11 @@ export function registerBlot(editorInstance: any) {
       ATTRS.forEach((attr: string) => {
         const value = this.domNode.getAttribute(attr);
         if (value !== undefined && value !== null) {
-          attrStr += ` ${attr}="${value}"`;
+          attrStr += ` ${attr}="${escapeHtmlAttribute(value)}"`;
         }
       });
 
-      return `<iframe src="${src}"${attrStr}></iframe>`;
+      return `<iframe src="${escapeHtmlAttribute(safeSrc)}"${attrStr}></iframe>`;
     }
   }
 
