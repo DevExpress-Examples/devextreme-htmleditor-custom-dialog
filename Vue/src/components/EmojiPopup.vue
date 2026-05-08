@@ -44,15 +44,16 @@ defineExpose({ show });
         <div class="emoji-scroll-area">
           <div class="emoji-section-title">Emoji</div>
           <div class="emoji-grid">
-            <div
-              v-for="emoji in filteredEmojis"
-              :key="emoji.char"
+            <button
+            v-for="emoji in filteredEmojis"
+            :key="emoji.char"
+            type="button"
               class="emoji-item"
               @mousedown.prevent
               @click="insertEmoji(emoji)"
             >
               {{ emoji.char }}
-            </div>
+            </button>
           </div>
         </div>
       </div>
@@ -99,6 +100,8 @@ defineExpose({ show });
   text-align: center;
   padding: 8px 0;
   border-radius: 6px;
+  border: none;
+  background-color: transparent;
   transition: background-color 0.15s ease;
 }
 
