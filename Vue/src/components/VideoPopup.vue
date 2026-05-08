@@ -35,7 +35,7 @@ defineExpose({ show, setupClipboard, registerBlot });
     <template #content>
       <div class="video-popup-content">
         <DxTextBox
-          :value="urlValue"
+          v-model:value="urlValue"
           placeholder="Enter video URL..."
           :show-clear-button="true"
           @value-changed="onUrlChanged"
@@ -44,7 +44,7 @@ defineExpose({ show, setupClipboard, registerBlot });
         <div class="video-separator">— OR —</div>
 
         <DxFileUploader
-          :value="fileValue"
+          v-model:value="fileValue"
           select-button-text="Upload a Video File"
           label-text=""
           accept="video/*"
