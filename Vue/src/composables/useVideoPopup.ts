@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const DIRECT_VIDEO_EXTENSION_REGEX = /\.(mp4|webm|ogg)$/i;
 
@@ -14,8 +14,17 @@ export function useVideoPopup(editor: () => any) {
   const insertIndex = ref(0);
   const selectionLength = ref(0);
   let finalVideoUrl = '';
+  let createdBlobUrl: string | null = null;
+
+  function revokeCreatedBlobUrl() {
+    if (createdBlobUrl) {
+      URL.revokeObjectURL(createdBlobUrl);
+      createdBlobUrl = null;
+    }
+  }
 
   function show(cursorIndex: number, length = 0) {
+    revokeCreatedBlobUrl();
     insertIndex.value = cursorIndex;
     selectionLength.value = length;
     finalVideoUrl = '';
@@ -45,6 +54,7 @@ export function useVideoPopup(editor: () => any) {
 
   function onUrlChanged(e: { value?: string }) {
     if (e.value) {
+      revokeCreatedBlobUrl();
       finalVideoUrl = e.value;
       fileValue.value = [];
     } else if (!fileValue.value.length) {
@@ -55,9 +65,12 @@ export function useVideoPopup(editor: () => any) {
   function onFileChanged(e: { value?: File[] }) {
     const file = e.value?.[0];
     if (file) {
-      finalVideoUrl = URL.createObjectURL(file);
+      revokeCreatedBlobUrl();
+      createdBlobUrl = URL.createObjectURL(file);
+      finalVideoUrl = createdBlobUrl;
       urlValue.value = '';
     } else if (!urlValue.value) {
+      revokeCreatedBlobUrl();
       finalVideoUrl = '';
     }
   }
@@ -77,11 +90,20 @@ export function useVideoPopup(editor: () => any) {
     editor().insertText(insertIndex.value + 1, '\n');
     editor().setSelection(insertIndex.value + 2, 0);
 
+    revokeCreatedBlobUrl();
     urlValue.value = '';
     fileValue.value = [];
     finalVideoUrl = '';
     visible.value = false;
   }
+
+  watch(visible, (isVisible) => {
+    if (!isVisible) {
+      revokeCreatedBlobUrl();
+      fileValue.value = [];
+      finalVideoUrl = '';
+    }
+  });
 
   return {
     visible,
