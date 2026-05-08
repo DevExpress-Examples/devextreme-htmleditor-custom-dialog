@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, shallowRef, type ComponentPublicInstance } from 'vue';
+import { ref, shallowRef } from 'vue';
 
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import DxHtmlEditor, { DxToolbar, DxItem } from 'devextreme-vue/html-editor';
@@ -9,14 +9,20 @@ import VideoPopup from './VideoPopup.vue';
 import LinkPopup from './LinkPopup.vue';
 import MarkupPopup from './MarkupPopup.vue';
 import { setupClipboard, registerBlot } from '../composables/useVideoPopup';
+import {
+  type LinkPopupComponent,
+  type EmojiPopupComponent,
+  type VideoPopupComponent,
+  type MarkupPopupComponent,
+} from '../types/popups';
 import markup from '../data/markup';
 
 const editorInstance = shallowRef<any>(null);
 
-const emojiPopupRef = ref<ComponentPublicInstance<typeof EmojiPopup> | null>(null);
-const videoPopupRef = ref<ComponentPublicInstance<typeof VideoPopup> | null>(null);
-const linkPopupRef = ref<ComponentPublicInstance<typeof LinkPopup> | null>(null);
-const markupPopupRef = ref<ComponentPublicInstance<typeof MarkupPopup> | null>(null);
+const emojiPopupRef = ref<EmojiPopupComponent | null>(null);
+const videoPopupRef = ref<VideoPopupComponent | null>(null);
+const linkPopupRef = ref<LinkPopupComponent | null>(null);
+const markupPopupRef = ref<MarkupPopupComponent | null>(null);
 
 function onEditorInitialized(e: any) {
   editorInstance.value = e.component;
@@ -31,24 +37,24 @@ function onLinkClick() {
   const range = editorInstance.value.getSelection();
   const index = range ? range.index : editorInstance.value.getLength();
   const length = range ? range.length : 0;
-  (linkPopupRef.value as any)?.show(index, length);
+  linkPopupRef.value?.show(index, length);
 }
 
 function onEmojiClick(e: any) {
   const range = editorInstance.value.getSelection();
   const index = range ? range.index : editorInstance.value.getLength();
-  (emojiPopupRef.value as any)?.show(index, e.element);
+  emojiPopupRef.value?.show(index, e.element);
 }
 
 function onVideoClick() {
   const range = editorInstance.value.getSelection();
   const index = range ? range.index : editorInstance.value.getLength();
   const length = range ? range.length : 0;
-  (videoPopupRef.value as any)?.show(index, length);
+  videoPopupRef.value?.show(index, length);
 }
 
 function onMarkupClick() {
-  (markupPopupRef.value as any)?.show();
+  markupPopupRef.value?.show();
 }
 
 const headerAcceptedValues = [false, 1, 2, 3, 4, 5];
