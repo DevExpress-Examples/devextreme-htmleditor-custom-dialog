@@ -45,9 +45,9 @@ defineExpose({ show });
           <div class="emoji-section-title">Emoji</div>
           <div class="emoji-grid">
             <button
-            v-for="emoji in filteredEmojis"
-            :key="emoji.char"
-            type="button"
+              v-for="emoji in filteredEmojis"
+              :key="emoji.char"
+              type="button"
               class="emoji-item"
               @mousedown.prevent
               @click="insertEmoji(emoji)"
