@@ -57,6 +57,7 @@ export function useVideoPopup(editor: () => any) {
   const selectionLength = ref(0);
   let finalVideoUrl = '';
   let createdBlobUrl: string | null = null;
+  let shouldRevokeOnClose = true;
 
   function revokeCreatedBlobUrl() {
     if (createdBlobUrl) {
@@ -67,6 +68,7 @@ export function useVideoPopup(editor: () => any) {
 
   function show(cursorIndex: number, length = 0) {
     revokeCreatedBlobUrl();
+    shouldRevokeOnClose = true;
     insertIndex.value = cursorIndex;
     selectionLength.value = length;
     finalVideoUrl = '';
@@ -132,7 +134,16 @@ export function useVideoPopup(editor: () => any) {
     editor().insertText(insertIndex.value + 1, '\n');
     editor().setSelection(insertIndex.value + 2, 0);
 
-    revokeCreatedBlobUrl();
+    const insertedCreatedBlobUrl = createdBlobUrl !== null && finalVideoUrl === createdBlobUrl;
+    if (insertedCreatedBlobUrl) {
+      // Keep the URL alive because the editor content now references it.
+      shouldRevokeOnClose = false;
+      createdBlobUrl = null;
+    } else {
+      shouldRevokeOnClose = true;
+      revokeCreatedBlobUrl();
+    }
+
     urlValue.value = '';
     fileValue.value = [];
     finalVideoUrl = '';
@@ -141,7 +152,10 @@ export function useVideoPopup(editor: () => any) {
 
   watch(visible, (isVisible) => {
     if (!isVisible) {
-      revokeCreatedBlobUrl();
+      if (shouldRevokeOnClose) {
+        revokeCreatedBlobUrl();
+      }
+      shouldRevokeOnClose = true;
       fileValue.value = [];
       finalVideoUrl = '';
     }
