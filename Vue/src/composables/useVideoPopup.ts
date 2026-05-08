@@ -1,5 +1,12 @@
 import { ref } from 'vue';
 
+const DIRECT_VIDEO_EXTENSION_REGEX = /\.(mp4|webm|ogg)$/i;
+
+function isDirectVideoUrl(url: string) {
+  const normalizedUrl = url.split(/[?#]/, 1)[0];
+  return DIRECT_VIDEO_EXTENSION_REGEX.test(normalizedUrl);
+}
+
 export function useVideoPopup(editor: () => any) {
   const visible = ref(false);
   const urlValue = ref('');
@@ -59,7 +66,8 @@ export function useVideoPopup(editor: () => any) {
     if (!finalVideoUrl) return;
 
     const isLocalBlob = finalVideoUrl.startsWith('blob:');
-    const embedType = isLocalBlob ? 'nativeVideo' : 'video';
+    const isDirectVideo = isDirectVideoUrl(finalVideoUrl);
+    const embedType = isLocalBlob || isDirectVideo ? 'nativeVideo' : 'video';
 
     if (selectionLength.value > 0) {
       editor().delete(insertIndex.value, selectionLength.value);
@@ -94,7 +102,7 @@ export function setupClipboard(config: any) {
     (node: HTMLAnchorElement, delta: any) => {
       const url = node.href;
       const isEmbedVideo = /youtu[.]?be|youtube\.com|vimeo\.com/i.test(node.hostname);
-      const isDirectVideo = /\.(mp4|webm|ogg)$/i.test(url);
+      const isDirectVideo = isDirectVideoUrl(url);
 
       if (isEmbedVideo) {
         delta.ops = [{ insert: { video: url } }, { insert: '\n' }];
