@@ -12,6 +12,7 @@ const props = defineProps<{
 const {
   visible,
   urlValue,
+  isTextEditorReady,
   setTextEditorInstance,
   show,
   applyLink,
@@ -63,6 +64,7 @@ defineExpose({ show });
           text="Insert"
           type="default"
           width="100%"
+          :disabled="!isTextEditorReady"
           class="link-apply-btn"
           @click="applyLink"
         />

@@ -1,15 +1,52 @@
 import { ref } from 'vue';
 
+const ABSOLUTE_SCHEME_REGEX = /^[a-zA-Z][a-zA-Z\d+.-]*:/;
+const ALLOWED_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
+
+function normalizeAndValidateLinkUrl(rawUrl: string) {
+  const trimmedUrl = rawUrl.trim();
+  if (!trimmedUrl) {
+    return null;
+  }
+
+  const candidateUrl = ABSOLUTE_SCHEME_REGEX.test(trimmedUrl)
+    ? trimmedUrl
+    : `https://${trimmedUrl}`;
+
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(candidateUrl);
+  } catch {
+    return null;
+  }
+
+  if (!ALLOWED_LINK_PROTOCOLS.has(parsedUrl.protocol)) {
+    return null;
+  }
+
+  if ((parsedUrl.protocol === 'http:' || parsedUrl.protocol === 'https:') && !parsedUrl.hostname) {
+    return null;
+  }
+
+  if ((parsedUrl.protocol === 'mailto:' || parsedUrl.protocol === 'tel:') && !parsedUrl.pathname) {
+    return null;
+  }
+
+  return parsedUrl.toString();
+}
+
 export function useLinkPopup(editor: () => any) {
   const visible = ref(false);
   const urlValue = ref('');
   const insertIndex = ref(0);
   const selectionLength = ref(0);
+  const isTextEditorReady = ref(false);
 
   let textEditorInstance: any = null;
 
   function setTextEditorInstance(instance: any) {
     textEditorInstance = instance;
+    isTextEditorReady.value = !!instance;
   }
 
   function show(cursorIndex: number, length: number) {
@@ -43,17 +80,20 @@ export function useLinkPopup(editor: () => any) {
   }
 
   function applyLink() {
-    const url = urlValue.value;
-    if (!url) return;
+    if (!textEditorInstance) return;
+
+    const normalizedUrl = normalizeAndValidateLinkUrl(urlValue.value);
+    if (!normalizedUrl) return;
+    urlValue.value = normalizedUrl;
 
     const rawText = textEditorInstance.getText().replace(/\n$/, '');
-    const newText = rawText || url;
+    const newText = rawText || normalizedUrl;
 
     const textLength = textEditorInstance.getLength() - 1;
     const appliedFormats = textLength > 0
       ? textEditorInstance.getFormat(0, textLength)
       : {};
-    const formatsForEditor = { ...appliedFormats, link: url };
+    const formatsForEditor = { ...appliedFormats, link: normalizedUrl };
 
     if (selectionLength.value > 0) {
       editor().delete(insertIndex.value, selectionLength.value);
@@ -70,6 +110,7 @@ export function useLinkPopup(editor: () => any) {
     urlValue,
     insertIndex,
     selectionLength,
+    isTextEditorReady,
     setTextEditorInstance,
     show,
     applyLink,
