@@ -1,4 +1,74 @@
-.main {
+.demo-container {
   margin: 50px;
   width: 90vw;
+}
+
+.popup-content {
+  padding: 10px;
+}
+
+.link-text-title {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.or-separator {
+  margin: 15px 0;
+  text-align: center;
+  font-weight: bold;
+  color: #888;
+}
+
+.link-apply-button {
+  margin-top: 20px;
+}
+
+.video-apply-button {
+  margin-top: 25px;
+}
+
+.emoji-popover-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.emoji-search-box {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.emoji-grid-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+
+.emoji-label {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+}
+
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+}
+
+.emoji-item {
+  font-size: 22px;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  padding: 8px 0;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  transition: background-color 0.15s ease;
+}
+
+.emoji-item:hover {
+  background-color: #f0f0f0;
 }
