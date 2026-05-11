@@ -5,6 +5,7 @@
   "dependencies": {
     "jquery": "3.7.1",
     "devextreme-dist": "^25.2.3",
+    "devextreme-quill": "^1.7.9",
     "devextreme-aspnet-data": "^5.1.0",
     "bootstrap": "^5.3.7"
   },

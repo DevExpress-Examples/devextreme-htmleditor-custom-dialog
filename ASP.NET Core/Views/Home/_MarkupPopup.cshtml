@@ -1,0 +1,10 @@
+@(Html.DevExtreme().Popup()
+    .ID("markup-popup")
+    .ShowTitle(true)
+    .Title("Markup")
+    .ShowCloseButton(true)
+    .OnShowing("onMarkupShowing")
+    .ContentTemplate(@<text>
+        <div class="value-content"></div>
+    </text>)
+)

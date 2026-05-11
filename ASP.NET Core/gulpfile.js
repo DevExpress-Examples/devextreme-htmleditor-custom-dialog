@@ -21,9 +21,7 @@ let defaultScripts = [
         "node_modules/exceljs/dist/exceljs.min.js",
         "node_modules/file-saver/FileSaver.min.js"
     ],
-    quillScripts = ["node_modules/devextreme-quill/dist/dx-quill.min.js",
-        "node_modules/turndown/dist/turndown.js",
-        "node_modules/showdown/dist/showdown.js"
+    quillScripts = ["node_modules/devextreme-quill/dist/dx-quill.min.js"
     ],
     diagramScript = ["node_modules/devexpress-diagram/dist/dx-diagram.min.js"],
     ganttScript = ["node_modules/devexpress-gantt/dist/dx-gantt.min.js"],
@@ -56,9 +54,8 @@ scripts = [...defaultScripts, ...diagramScript, ...dxtScripts];
 styles = [...styles, ...diagramStyles];
 */
 
-/* // HtmlEditor 
-scripts = [...defaultScripts, ...quillScripts, dxtScripts];
-*/
+scripts = [...defaultScripts, ...quillScripts, ...dxtScripts];
+
 
 /* // Export 
 scripts = [...exportScripts, ...scripts];

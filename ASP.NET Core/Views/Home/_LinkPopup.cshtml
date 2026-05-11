@@ -1,0 +1,44 @@
+@(Html.DevExtreme().Popup()
+    .ID("link-popup")
+    .ShowTitle(true)
+    .Title("Insert Formatted Link")
+    .Width(450)
+    .Height(380)
+    .DeferRendering(false)
+    .ShowCloseButton(true)
+    .ContentTemplate(@<text>
+        <div style="padding: 10px;">
+            @(Html.DevExtreme().TextBox()
+            .Label("URL:")
+            .LabelMode(EditorLabelMode.Outside)
+                .ID("link-url-box")
+                .Placeholder("Enter URL (e.g., https://google.com)...")
+                .ShowClearButton(true)
+            )
+
+            <div style="margin-top: 15px; font-size: 12px;">Link Text:</div>
+
+            @(Html.DevExtreme().HtmlEditor()
+                .ID("link-text-editor")
+                .Height(120)
+                .Toolbar(toolbar => toolbar.Items(items => {
+                    items.Add().Name("header").Visible(false);
+                    items.Add().Name("bold");
+                    items.Add().Name("italic");
+                    items.Add().Name("underline");
+                    items.Add().Name("strike");
+                    items.Add().Name("color");
+                }))           
+            )
+
+            <div style="margin-top: 20px;"></div>
+
+            @(Html.DevExtreme().Button()
+                .Text("Insert")
+                .Type(ButtonType.Default)
+                .Width("100%")
+                .OnClick("LinkPopupHelper.onApplyClick")
+            )
+        </div>
+    </text>)
+)
