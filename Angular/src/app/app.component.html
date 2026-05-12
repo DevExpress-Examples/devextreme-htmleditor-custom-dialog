@@ -1,3 +1,57 @@
-<div class="default-style">
-  <dx-button [text]="buttonText" (onClick)="onClick($event)"></dx-button>
+<div class="demo-container">
+  <dx-html-editor
+    [height]="500"
+    [value]="initialMarkup"
+    [customizeModules]="customizeModules"
+    (onInitialized)="onEditorInitialized($event)"
+  >
+    <dxo-toolbar>
+      <dxi-item name="undo"></dxi-item>
+      <dxi-item name="redo"></dxi-item>
+      <dxi-item name="separator"></dxi-item>
+      <dxi-item
+        name="header"
+        [acceptedValues]="headerAcceptedValues"
+        [options]="{ inputAttr: { 'aria-label': 'Header' } }"
+      ></dxi-item>
+      <dxi-item name="separator"></dxi-item>
+      <dxi-item name="bold"></dxi-item>
+      <dxi-item name="italic"></dxi-item>
+      <dxi-item name="strike"></dxi-item>
+      <dxi-item name="underline"></dxi-item>
+      <dxi-item name="separator"></dxi-item>
+      <dxi-item name="alignLeft"></dxi-item>
+      <dxi-item name="alignCenter"></dxi-item>
+      <dxi-item name="alignRight"></dxi-item>
+      <dxi-item name="alignJustify"></dxi-item>
+      <dxi-item name="separator"></dxi-item>
+      <dxi-item widget="dxButton" [options]="linkButtonOptions"></dxi-item>
+      <dxi-item widget="dxButton" [options]="emojiButtonOptions"></dxi-item>
+      <dxi-item widget="dxButton" [options]="videoButtonOptions"></dxi-item>
+      <dxi-item widget="dxButton" [options]="markupButtonOptions"></dxi-item>
+    </dxo-toolbar>
+  </dx-html-editor>
+
+  <app-emoji-popover
+    [(visible)]="emojiPopoverVisible"
+    [target]="emojiTarget"
+    (emojiInsert)="onEmojiInsert($event)"
+  ></app-emoji-popover>
+
+  <app-link-dialog
+    [(visible)]="linkDialogVisible"
+    [data]="linkDialogData"
+    (linkApply)="onLinkApply($event)"
+  ></app-link-dialog>
+
+  <app-video-dialog
+    [(visible)]="videoDialogVisible"
+    [data]="videoDialogData"
+    (videoApply)="onVideoApply($event)"
+  ></app-video-dialog>
+
+  <app-markup-popup
+    [(visible)]="markupPopupVisible"
+    [value]="markupValue"
+  ></app-markup-popup>
 </div>
