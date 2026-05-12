@@ -1,0 +1,9 @@
+<dx-popup
+  [showTitle]="true"
+  title="Markup"
+  [visible]="visible"
+  [showCloseButton]="true"
+  (onHiding)="onHiding()"
+>
+  <div *dxTemplate="let _ of 'content'" class="markup-content">{{ value }}</div>
+</dx-popup>
