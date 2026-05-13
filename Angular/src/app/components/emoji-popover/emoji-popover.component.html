@@ -24,14 +24,14 @@
       <div class="emoji-label">Emoji</div>
       <div class="emoji-grid">
         @for (emoji of filteredEmojis; track emoji.char) {
-          <button
-            type="button"
-            class="emoji-item"
-            (mousedown)="$event.preventDefault()"
-            (click)="onEmojiClick(emoji.char)"
-          >
-            {{ emoji.char }}
-          </button>
+        <button
+          type="button"
+          class="emoji-item"
+          (mousedown)="$event.preventDefault()"
+          (click)="onEmojiClick(emoji.char)"
+        >
+          {{ emoji.char }}
+        </button>
         }
       </div>
     </div>
