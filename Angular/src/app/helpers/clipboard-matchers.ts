@@ -1,3 +1,5 @@
+import { getSafeEmbedSrc } from './sanitizers';
+
 const DIRECT_VIDEO_PATTERN = /\.(mp4|webm|ogg)$/i;
 
 type DeltaOp = { insert: string | Record<string, string> };
@@ -5,11 +7,11 @@ type ClipboardDelta = { ops: DeltaOp[] };
 
 function matchAnchorNode(node: HTMLAnchorElement, delta: ClipboardDelta): ClipboardDelta {
   const url = node.href;
-  const isEmbedVideo = /youtu[.]?be|youtube\.com|vimeo\.com/i.test(node.hostname);
+  const safeEmbedSrc = getSafeEmbedSrc(url);
   const isDirectVideo = DIRECT_VIDEO_PATTERN.test(url.split(/[?#]/, 1)[0]);
 
-  if (isEmbedVideo) {
-    delta.ops = [{ insert: { video: url } }, { insert: '\n' }];
+  if (safeEmbedSrc) {
+    delta.ops = [{ insert: { video: safeEmbedSrc } }, { insert: '\n' }];
   } else if (isDirectVideo) {
     delta.ops = [{ insert: { nativeVideo: url } }, { insert: '\n' }];
   }
@@ -18,7 +20,11 @@ function matchAnchorNode(node: HTMLAnchorElement, delta: ClipboardDelta): Clipbo
 }
 
 function matchIframeNode(node: HTMLIFrameElement, delta: ClipboardDelta): ClipboardDelta {
-  delta.ops = [{ insert: { video: node.src } }, { insert: '\n' }];
+  const safeEmbedSrc = getSafeEmbedSrc(node.src);
+  if (safeEmbedSrc) {
+    delta.ops = [{ insert: { video: safeEmbedSrc } }, { insert: '\n' }];
+  }
+
   return delta;
 }
 

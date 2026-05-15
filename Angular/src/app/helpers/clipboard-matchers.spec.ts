@@ -53,6 +53,13 @@ describe('setupClipboard', () => {
       const result = anchorMatcher(node, delta);
       expect(result.ops).toEqual([{ insert: 'text' }]);
     });
+
+    it('should not treat lookalike domains as embed providers', () => {
+      const node = { href: 'https://notyoutube.com/watch?v=abc', hostname: 'notyoutube.com' };
+      const delta = { ops: [{ insert: 'text' }] };
+      const result = anchorMatcher(node, delta);
+      expect(result.ops).toEqual([{ insert: 'text' }]);
+    });
   });
 
   describe('iframe matcher', () => {
@@ -65,6 +72,17 @@ describe('setupClipboard', () => {
       const delta = { ops: [] };
       const result = iframeMatcher(node, delta);
       expect(result.ops[0].insert).toEqual({ video: 'https://www.youtube.com/embed/abc' });
+    });
+
+    it('should ignore iframe src from disallowed domains', () => {
+      const config: any = { clipboard: { matchers: [] } };
+      setupClipboard(config);
+      const iframeMatcher = config.clipboard.matchers[1][1];
+
+      const node = { src: 'https://notyoutube.com/embed/abc' };
+      const delta = { ops: [{ insert: 'text' }] };
+      const result = iframeMatcher(node, delta);
+      expect(result.ops).toEqual([{ insert: 'text' }]);
     });
   });
 

@@ -1,18 +1,16 @@
 const ABSOLUTE_SCHEME_REGEX = /^[a-zA-Z][a-zA-Z\d+.-]*:/;
 const ALLOWED_LINK_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
 const ALLOWED_EMBED_PROTOCOLS = new Set(['https:']);
-const ALLOWED_EMBED_HOSTS = new Set([
+const ALLOWED_EMBED_DOMAINS = [
   'youtube.com',
-  'www.youtube.com',
-  'm.youtube.com',
   'youtu.be',
-  'www.youtu.be',
   'youtube-nocookie.com',
-  'www.youtube-nocookie.com',
-  'player.vimeo.com',
   'vimeo.com',
-  'www.vimeo.com',
-]);
+];
+
+function isAllowedEmbedHost(hostname: string): boolean {
+  return ALLOWED_EMBED_DOMAINS.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`));
+}
 
 export function normalizeAndValidateLinkUrl(rawUrl: string): string | null {
   const trimmedUrl = rawUrl.trim();
@@ -68,7 +66,7 @@ export function getSafeEmbedSrc(value: string | null): string | null {
   }
 
   const hostname = parsedUrl.hostname.toLowerCase();
-  if (!ALLOWED_EMBED_PROTOCOLS.has(parsedUrl.protocol) || !ALLOWED_EMBED_HOSTS.has(hostname)) {
+  if (!ALLOWED_EMBED_PROTOCOLS.has(parsedUrl.protocol) || !isAllowedEmbedHost(hostname)) {
     return null;
   }
 

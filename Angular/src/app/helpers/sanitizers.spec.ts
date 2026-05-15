@@ -71,12 +71,21 @@ describe('getSafeEmbedSrc', () => {
     expect(getSafeEmbedSrc(url)).toBe(url);
   });
 
+  it('should allow subdomains of allowed embed domains', () => {
+    const url = 'https://music.youtube.com/watch?v=abc123';
+    expect(getSafeEmbedSrc(url)).toBe(url);
+  });
+
   it('should reject non-https embeds', () => {
     expect(getSafeEmbedSrc('http://www.youtube.com/embed/abc')).toBeNull();
   });
 
   it('should reject disallowed hosts', () => {
     expect(getSafeEmbedSrc('https://evil.com/video')).toBeNull();
+  });
+
+  it('should reject lookalike domains', () => {
+    expect(getSafeEmbedSrc('https://notyoutube.com/watch?v=abc')).toBeNull();
   });
 
   it('should reject invalid URLs', () => {
