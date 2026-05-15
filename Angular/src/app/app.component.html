@@ -5,31 +5,31 @@
     [customizeModules]="customizeModules"
     (onInitialized)="onEditorInitialized($event)"
   >
-    <dxo-toolbar>
-      <dxi-item name="undo"></dxi-item>
-      <dxi-item name="redo"></dxi-item>
-      <dxi-item name="separator"></dxi-item>
-      <dxi-item
+    <dxo-html-editor-toolbar>
+      <dxi-html-editor-item name="undo"></dxi-html-editor-item>
+      <dxi-html-editor-item name="redo"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item
         name="header"
         [acceptedValues]="headerAcceptedValues"
         [options]="{ inputAttr: { 'aria-label': 'Header' } }"
-      ></dxi-item>
-      <dxi-item name="separator"></dxi-item>
-      <dxi-item name="bold"></dxi-item>
-      <dxi-item name="italic"></dxi-item>
-      <dxi-item name="strike"></dxi-item>
-      <dxi-item name="underline"></dxi-item>
-      <dxi-item name="separator"></dxi-item>
-      <dxi-item name="alignLeft"></dxi-item>
-      <dxi-item name="alignCenter"></dxi-item>
-      <dxi-item name="alignRight"></dxi-item>
-      <dxi-item name="alignJustify"></dxi-item>
-      <dxi-item name="separator"></dxi-item>
-      <dxi-item widget="dxButton" [options]="linkButtonOptions"></dxi-item>
-      <dxi-item widget="dxButton" [options]="emojiButtonOptions"></dxi-item>
-      <dxi-item widget="dxButton" [options]="videoButtonOptions"></dxi-item>
-      <dxi-item widget="dxButton" [options]="markupButtonOptions"></dxi-item>
-    </dxo-toolbar>
+      ></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item name="bold"></dxi-html-editor-item>
+      <dxi-html-editor-item name="italic"></dxi-html-editor-item>
+      <dxi-html-editor-item name="strike"></dxi-html-editor-item>
+      <dxi-html-editor-item name="underline"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignLeft"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignCenter"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignRight"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignJustify"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item widget="dxButton" [options]="linkButtonOptions"></dxi-html-editor-item>
+      <dxi-html-editor-item widget="dxButton" [options]="emojiButtonOptions"></dxi-html-editor-item>
+      <dxi-html-editor-item widget="dxButton" [options]="videoButtonOptions"></dxi-html-editor-item>
+      <dxi-html-editor-item widget="dxButton" [options]="markupButtonOptions"></dxi-html-editor-item>
+    </dxo-html-editor-toolbar>
   </dx-html-editor>
 
   <app-emoji-popover

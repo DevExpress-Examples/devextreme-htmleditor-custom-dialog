@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
-import { DxHtmlEditorModule } from 'devextreme-angular/ui/html-editor';
+import { DxHtmlEditorModule, type DxHtmlEditorTypes } from 'devextreme-angular/ui/html-editor';
+import type dxHtmlEditor from 'devextreme/ui/html_editor';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
-import { InitializedEvent } from 'devextreme/ui/html_editor';
 import { normalizeAndValidateLinkUrl } from '../../helpers';
 import { LinkDialogData } from './link-dialog.types';
 
@@ -22,14 +22,14 @@ export class LinkDialogComponent {
 
   url = '';
 
-  private textEditorInstance: any;
+  private textEditorInstance: dxHtmlEditor | null = null;
 
   onUrlChanged(event: { value?: string }): void {
     this.url = event.value ?? '';
   }
 
-  onTextEditorInitialized(event: InitializedEvent): void {
-    this.textEditorInstance = event.component;
+  onTextEditorInitialized(event: DxHtmlEditorTypes.InitializedEvent): void {
+    this.textEditorInstance = event.component || null;
   }
 
   onShown(): void {
