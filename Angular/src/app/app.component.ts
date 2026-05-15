@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { DxHtmlEditorModule } from 'devextreme-angular/ui/html-editor';
 import { InitializedEvent } from 'devextreme/ui/html_editor';
 import {
@@ -10,7 +10,7 @@ import {
   VideoDialogData,
 } from './components';
 import { INITIAL_MARKUP } from './data';
-import { setupClipboard, registerVideoBlots } from './helpers';
+import { BlobUrlRegistryService, setupClipboard, registerVideoBlots } from './helpers';
 
 interface SelectionRange {
   index: number;
@@ -29,8 +29,14 @@ interface SelectionRange {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   readonly headerAcceptedValues = [false, 1, 2, 3, 4, 5];
+
+  constructor(private readonly blobRegistry: BlobUrlRegistryService) {}
+
+  ngOnDestroy(): void {
+    this.blobRegistry.revokeAll();
+  }
   readonly initialMarkup = INITIAL_MARKUP;
   readonly customizeModules = setupClipboard;
 

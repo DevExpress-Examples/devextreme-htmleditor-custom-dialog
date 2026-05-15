@@ -1,10 +1,13 @@
 import { VideoDialogComponent } from './video-dialog.component';
+import { BlobUrlRegistryService } from '../../helpers';
 
 describe('VideoDialogComponent', () => {
   let component: VideoDialogComponent;
+  let mockRegistry: jasmine.SpyObj<BlobUrlRegistryService>;
 
   beforeEach(() => {
-    component = new VideoDialogComponent();
+    mockRegistry = jasmine.createSpyObj('BlobUrlRegistryService', ['register', 'revokeAll']);
+    component = new VideoDialogComponent(mockRegistry);
   });
 
   it('should create', () => {
@@ -95,6 +98,22 @@ describe('VideoDialogComponent', () => {
       spyOn(component.videoApply, 'emit');
       component.apply();
       expect(component.videoApply.emit).not.toHaveBeenCalled();
+    });
+
+    it('should register blob URL with registry on apply and clear local reference', () => {
+      spyOn(component.videoApply, 'emit');
+      spyOn(component.visibleChange, 'emit');
+      spyOn(URL, 'createObjectURL').and.returnValue('blob:http://localhost/fake');
+
+      const file = new File(['content'], 'video.mp4', { type: 'video/mp4' });
+      component.data = { index: 0, length: 0, existingUrl: '' };
+      component.onFileChanged({ value: [file] });
+      component.apply();
+
+      expect(mockRegistry.register).toHaveBeenCalledWith('blob:http://localhost/fake');
+      expect(component.videoApply.emit).toHaveBeenCalledWith(
+        jasmine.objectContaining({ embedType: 'nativeVideo', url: 'blob:http://localhost/fake' }),
+      );
     });
 
     it('should emit video embed type for YouTube URL', () => {

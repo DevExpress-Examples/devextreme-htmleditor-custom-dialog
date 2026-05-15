@@ -3,6 +3,7 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxFileUploaderModule } from 'devextreme-angular/ui/file-uploader';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
+import { BlobUrlRegistryService } from '../../helpers';
 
 const DIRECT_VIDEO_PATTERN = /\.(mp4|webm|ogg)$/i;
 
@@ -21,6 +22,8 @@ export interface VideoDialogData {
 export class VideoDialogComponent implements OnDestroy {
   @Input() visible = false;
   @Input() data: VideoDialogData = { index: 0, length: 0, existingUrl: '' };
+
+  constructor(private readonly blobRegistry: BlobUrlRegistryService) {}
 
   @Output() visibleChange = new EventEmitter<boolean>();
   @Output() videoApply = new EventEmitter<{ index: number; length: number; embedType: string; url: string }>();
@@ -106,6 +109,7 @@ export class VideoDialogComponent implements OnDestroy {
     if (!isLocalBlob) {
       this.revokeBlob();
     } else {
+      this.blobRegistry.register(this.createdBlobUrl!);
       this.createdBlobUrl = null;
     }
 
