@@ -1,3 +1,69 @@
-<div class="default-style">
-  <dx-button [text]="buttonText" (onClick)="onClick($event)"></dx-button>
+<div class="demo-container">
+  <dx-html-editor
+    [height]="500"
+    [value]="initialMarkup"
+    [customizeModules]="customizeModules"
+    (onInitialized)="onEditorInitialized($event)"
+  >
+    <dxo-html-editor-toolbar>
+      <dxi-html-editor-item name="undo"></dxi-html-editor-item>
+      <dxi-html-editor-item name="redo"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item
+        name="header"
+        [acceptedValues]="headerAcceptedValues"
+        [options]="{ inputAttr: { 'aria-label': 'Header' } }"
+      ></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item name="bold"></dxi-html-editor-item>
+      <dxi-html-editor-item name="italic"></dxi-html-editor-item>
+      <dxi-html-editor-item name="strike"></dxi-html-editor-item>
+      <dxi-html-editor-item name="underline"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignLeft"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignCenter"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignRight"></dxi-html-editor-item>
+      <dxi-html-editor-item name="alignJustify"></dxi-html-editor-item>
+      <dxi-html-editor-item name="separator"></dxi-html-editor-item>
+      <dxi-html-editor-item
+        widget="dxButton"
+        [options]="linkButtonOptions"
+      ></dxi-html-editor-item>
+      <dxi-html-editor-item
+        widget="dxButton"
+        [options]="emojiButtonOptions"
+      ></dxi-html-editor-item>
+      <dxi-html-editor-item
+        widget="dxButton"
+        [options]="videoButtonOptions"
+      ></dxi-html-editor-item>
+      <dxi-html-editor-item
+        widget="dxButton"
+        [options]="markupButtonOptions"
+      ></dxi-html-editor-item>
+    </dxo-html-editor-toolbar>
+  </dx-html-editor>
+
+  <app-emoji-popover
+    [(visible)]="emojiPopoverVisible"
+    [target]="emojiTarget"
+    (emojiInsert)="onEmojiInsert($event)"
+  ></app-emoji-popover>
+
+  <app-link-dialog
+    [(visible)]="linkDialogVisible"
+    [data]="linkDialogData"
+    (linkApply)="onLinkApply($event)"
+  ></app-link-dialog>
+
+  <app-video-dialog
+    [(visible)]="videoDialogVisible"
+    [data]="videoDialogData"
+    (videoApply)="onVideoApply($event)"
+  ></app-video-dialog>
+
+  <app-markup-popup
+    [(visible)]="markupPopupVisible"
+    [value]="markupValue"
+  ></app-markup-popup>
 </div>

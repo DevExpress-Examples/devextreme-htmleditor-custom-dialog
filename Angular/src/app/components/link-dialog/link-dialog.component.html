@@ -1,0 +1,45 @@
+<dx-popup
+  [showTitle]="true"
+  title="Insert Formatted Link"
+  [width]="450"
+  [height]="380"
+  [deferRendering]="false"
+  [visible]="visible"
+  [showCloseButton]="true"
+  (onShown)="onShown()"
+  (onHiding)="onHiding()"
+>
+  <div *dxTemplate="let _ of 'content'" class="link-popup-content">
+    <dx-text-box
+      placeholder="Enter URL (e.g., https://google.com)..."
+      [showClearButton]="true"
+      label="URL:"
+      labelMode="outside"
+      [value]="url"
+      (onValueChanged)="onUrlChanged($event)"
+    ></dx-text-box>
+
+    <div class="link-text-title">Link Text:</div>
+
+    <dx-html-editor
+      [height]="120"
+      (onInitialized)="onTextEditorInitialized($event)"
+    >
+      <dxo-html-editor-toolbar>
+        <dxi-html-editor-item name="bold"></dxi-html-editor-item>
+        <dxi-html-editor-item name="italic"></dxi-html-editor-item>
+        <dxi-html-editor-item name="underline"></dxi-html-editor-item>
+        <dxi-html-editor-item name="strike"></dxi-html-editor-item>
+        <dxi-html-editor-item name="color"></dxi-html-editor-item>
+      </dxo-html-editor-toolbar>
+    </dx-html-editor>
+
+    <dx-button
+      class="link-apply-button"
+      text="Insert"
+      type="default"
+      width="100%"
+      (onClick)="apply()"
+    ></dx-button>
+  </div>
+</dx-popup>

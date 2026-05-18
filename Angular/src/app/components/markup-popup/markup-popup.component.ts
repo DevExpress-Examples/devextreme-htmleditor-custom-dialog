@@ -1,0 +1,19 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DxPopupModule } from 'devextreme-angular/ui/popup';
+
+@Component({
+  selector: 'app-markup-popup',
+  imports: [DxPopupModule],
+  templateUrl: './markup-popup.component.html',
+  styleUrls: ['./markup-popup.component.scss'],
+})
+export class MarkupPopupComponent {
+  @Input() visible = false;
+  @Input() value = '';
+
+  @Output() visibleChange = new EventEmitter<boolean>();
+
+  onHiding(): void {
+    this.visibleChange.emit(false);
+  }
+}

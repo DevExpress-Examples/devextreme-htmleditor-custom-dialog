@@ -1,0 +1,39 @@
+<dx-popup
+  [showTitle]="true"
+  title="Insert Video"
+  [width]="450"
+  [height]="320"
+  [deferRendering]="false"
+  [visible]="visible"
+  [showCloseButton]="true"
+  (onShown)="onShown()"
+  (onHiding)="onHiding()"
+>
+  <div *dxTemplate="let _ of 'content'" class="video-popup-content">
+    <dx-text-box
+      placeholder="Enter video URL..."
+      [showClearButton]="true"
+      [value]="url"
+      (onValueChanged)="onUrlChanged($event)"
+    ></dx-text-box>
+
+    <div class="or-separator">&mdash; OR &mdash;</div>
+
+    <dx-file-uploader
+      selectButtonText="Upload a Video File"
+      labelText=""
+      accept="video/*"
+      uploadMode="useForm"
+      [value]="fileValue"
+      (onValueChanged)="onFileChanged($event)"
+    ></dx-file-uploader>
+
+    <dx-button
+      class="video-apply-button"
+      text="Insert"
+      type="default"
+      width="100%"
+      (onClick)="apply()"
+    ></dx-button>
+  </div>
+</dx-popup>
