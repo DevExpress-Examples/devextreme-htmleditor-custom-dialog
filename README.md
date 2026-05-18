@@ -3,47 +3,106 @@
 [![](https://img.shields.io/badge/📖_How_to_use_DevExpress_Examples-e9f6fc?style=flat-square)](https://docs.devexpress.com/GeneralInformation/403183)
 [![](https://img.shields.io/badge/💬_Leave_Feedback-feecdd?style=flat-square)](#does-this-example-address-your-development-requirementsobjectives)
 <!-- default badges end -->
-# DevExtreme Examples Template
+# DevExtreme HTML Editor - Custom Toolbar Dialogs
 
-This is the repository template for creating new examples. 
+The DevExtreme HTML Editor ships with built-in toolbar dialogs for inserting links and images. This example demonstrates how to replace those built-in dialogs — and add entirely new ones — using custom DevExtreme Popup-based components:
 
-![Example image](images/image-template.png)
+- **Video dialog** — insert a video by URL or by uploading a local file; supports both embedded (YouTube/Vimeo) and native `<video>` playback.
+- **Link dialog** — edit the link text and URL in a custom popup with full format control.
+- **Emoji popover** — pick and insert emoji characters from a lightweight popover.
+- **Markup popup** — inspect the raw HTML markup produced by the editor.
 
-Use **DevExtreme _Product_ - _Task_** template for a title. 
+The example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct embed format.
 
-Describe the solved task in this section.
+![HTML Editor Custom Dialogs](images/image-template.png)
 
-Put a screenshot/gif that illustrates the result here.
+## Implementation Details
 
-Then, add implementation details (steps, code snippets, and other technical information in a free form), or add a link to an existing document with implementation details. 
+1. Add custom toolbar buttons using the `widget: 'dxButton'` item type and handle `onClick` to open the corresponding dialog:
+
+```js
+{ widget: 'dxButton', options: { icon: 'video',  hint: 'Insert/Edit Video',  onClick: () => openVideoDialog()  } }
+{ widget: 'dxButton', options: { icon: 'link',   hint: 'Insert Custom Link', onClick: () => openLinkDialog()   } }
+{ widget: 'dxButton', options: { text: '😀',     hint: 'Insert Emoji',       onClick: () => openEmojiPopover() } }
+```
+
+2. Obtain the editor instance from the `onInitialized` event, register custom Quill blots for native video playback, and read the current selection to pre-populate each dialog:
+
+```js
+onEditorInitialized(event) {
+  this.editorInstance = event.component;
+  registerVideoBlots(this.editorInstance);
+}
+```
+
+3. On video or link dialog confirmation, apply changes through the Quill API. Use `insertEmbed` for video formats, `insertText` for link text, and always add a trailing newline:
+
+```js
+// video
+editorInstance.insertEmbed(index, embedType, url);
+editorInstance.insertText(index + 1, '\n', {});
+editorInstance.setSelection(index + 2, 0);
+
+// link
+editorInstance.delete(index, length);
+editorInstance.insertText(index, text, formats);
+```
+
+4. Configure clipboard matchers via `customizeModules` to intercept pasted `<a>`, `<iframe>`, and `<video>` elements and convert them to the appropriate embed format automatically.
 
 ## Files to Review
 
 - **Angular**
     - [app.component.html](Angular/src/app/app.component.html)
     - [app.component.ts](Angular/src/app/app.component.ts)
+    - [video-dialog.component.ts](Angular/src/app/components/video-dialog/video-dialog.component.ts)
+    - [link-dialog.component.ts](Angular/src/app/components/link-dialog/link-dialog.component.ts)
+    - [emoji-popover.component.ts](Angular/src/app/components/emoji-popover/emoji-popover.component.ts)
+    - [clipboard-matchers.ts](Angular/src/app/helpers/clipboard-matchers.ts)
+    - [video-blots.ts](Angular/src/app/helpers/video-blots.ts)
 - **React**
     - [App.tsx](React/src/App.tsx)
+    - [VideoDialog.tsx](React/src/components/video/VideoDialog.tsx)
+    - [LinkDialog.tsx](React/src/components/link/LinkDialog.tsx)
+    - [EmojiPopover.tsx](React/src/components/emoji/EmojiPopover.tsx)
+    - [useVideoDialog.ts](React/src/hooks/useVideoDialog.ts)
+    - [useLinkDialog.ts](React/src/hooks/useLinkDialog.ts)
+    - [useEmojiPopover.ts](React/src/hooks/useEmojiPopover.ts)
+    - [clipboardMatchers.ts](React/src/helpers/clipboardMatchers.ts)
 - **Vue**
     - [App.vue](Vue/src/App.vue)
-    - [Home.vue](Vue/src/components/HomeContent.vue)
+    - [HomeContent.vue](Vue/src/components/HomeContent.vue)
+    - [VideoPopup.vue](Vue/src/components/VideoPopup.vue)
+    - [LinkPopup.vue](Vue/src/components/LinkPopup.vue)
+    - [EmojiPopup.vue](Vue/src/components/EmojiPopup.vue)
+    - [useVideoPopup.ts](Vue/src/composables/useVideoPopup.ts)
+    - [useLinkPopup.ts](Vue/src/composables/useLinkPopup.ts)
+    - [useEmojiPopup.ts](Vue/src/composables/useEmojiPopup.ts)
 - **jQuery**
     - [index.html](jQuery/src/index.html)
     - [index.js](jQuery/src/index.js)
-- **ASP.NET Core**    
+    - [VideoPopupHelper.js](jQuery/src/helpers/VideoPopupHelper.js)
+    - [LinkPopupHelper.js](jQuery/src/helpers/LinkPopupHelper.js)
+    - [EmojiPopupHelper.js](jQuery/src/helpers/EmojiPopupHelper.js)
+- **ASP.NET Core**
     - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
+    - [_VideoPopup.cshtml](ASP.NET%20Core/Views/Home/_VideoPopup.cshtml)
+    - [_LinkPopup.cshtml](ASP.NET%20Core/Views/Home/_LinkPopup.cshtml)
+    - [_EmojiPopup.cshtml](ASP.NET%20Core/Views/Home/_EmojiPopup.cshtml)
+    - [VideoPopupHelper.js](ASP.NET%20Core/wwwroot/js/helpers/VideoPopupHelper.js)
+    - [LinkPopupHelper.js](ASP.NET%20Core/wwwroot/js/helpers/LinkPopupHelper.js)
+    - [EmojiPopupHelper.js](ASP.NET%20Core/wwwroot/js/helpers/EmojiPopupHelper.js)
 
 ## Documentation
 
-- link
-- link
-- ...
-
-## More Examples
-
-- link
-- link
-- ...
+- [HTML Editor Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Overview/)
+- [HTML Editor — Toolbar](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Toolbar/)
+- [Popup Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/Popup/Overview/)
+- [Angular HTML Editor Documentation](https://js.devexpress.com/Angular/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
+- [React HTML Editor Documentation](https://js.devexpress.com/React/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
+- [Vue HTML Editor Documentation](https://js.devexpress.com/Vue/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
+- [jQuery HTML Editor Documentation](https://js.devexpress.com/jQuery/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
+- [ASP.NET Core HTML Editor Documentation](https://docs.devexpress.com/AspNetCore/401367/devextreme-based-controls/controls/html-editor)
 <!-- feedback -->
 ## Does This Example Address Your Development Requirements/Objectives?
 
