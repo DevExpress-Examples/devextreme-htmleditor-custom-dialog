@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
 import './App.css';
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+import 'devextreme/dist/css/dx.fluent.blue.light.compact.css';
 import HtmlEditor, { Item, Toolbar } from 'devextreme-react/html-editor';
 import { setupClipboard } from './helpers/clipboardMatchers';
 import { INITIAL_MARKUP } from './data/markup';

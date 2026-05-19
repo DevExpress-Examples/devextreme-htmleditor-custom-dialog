@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, shallowRef } from 'vue';
 
-import 'devextreme/dist/css/dx.material.blue.light.compact.css';
+import 'devextreme/dist/css/dx.fluent.blue.light.compact.css';
 import DxHtmlEditor, { DxToolbar, DxItem } from 'devextreme-vue/html-editor';
 
 import EmojiPopup from './EmojiPopup.vue';
