@@ -5,14 +5,14 @@
 <!-- default badges end -->
 # DevExtreme HTML Editor - Custom Toolbar Dialogs
 
-The DevExtreme HTML Editor ships with built-in toolbar dialogs for inserting links and images. This example demonstrates how to add new dialogs to the toolbar using custom DevExtreme Popup-based components:
+The DevExtreme HTML Editor ships with built-in toolbar dialogs to insert links and images. This example adds new dialogs to the toolbar using custom DevExtreme Popup-based components:
 
-- **Video dialog** — insert a video by URL or by uploading a local file. Supports both embedded (YouTube/Vimeo) and native `<video>` playback.
-- **Link dialog** — edit the link text and URL in a custom popup with full format control.
-- **Emoji popover** — pick and insert emoji characters from a popover.
-- **Markup popup** — inspect the raw HTML markup produced by the editor.
+- **Video dialog** — inserts a video by URL or from a local file. Supports both embedded (YouTube/Vimeo) and native `<video>` playback.
+- **Link dialog** — edits the link text and URL in a custom popup with full format control.
+- **Emoji popover** — inserts emoji characters from a popover.
+- **Markup popup** — inspects the raw HTML markup produced by the editor.
 
-The example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct embed format.
+The example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct format.
 
 ![HTML Editor Custom Dialogs](images/image-template.png)
 
@@ -26,7 +26,7 @@ The example also registers custom Quill blots for native `<video>` elements and 
 { widget: 'dxButton', options: { text: '😀',     hint: 'Insert Emoji',       onClick: () => openEmojiPopover() } }
 ```
 
-2. In the [onInitialized](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxHtmlEditor/Configuration/#onInitialized) event handler, get the editor instance, register custom Quill blots for native video playback, and read the current selection to pre-populate each dialog:
+2. In the [onInitialized](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxHtmlEditor/Configuration/#onInitialized) event handler, obtain the editor instance, register custom Quill blots for the native video playback, and read the current selection to pre-populate each dialog:
 
 ```js
 onEditorInitialized(event) {
@@ -35,7 +35,7 @@ onEditorInitialized(event) {
 }
 ```
 
-3. On video or link dialog confirmation, apply changes using the Quill API: 
+3. After a user confirms the operation via dialog, apply changes using the Quill APIs: 
 
 - `insertEmbed` for video formats.
 - `insertText` for link text.
