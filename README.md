@@ -102,11 +102,7 @@ editorInstance.insertText(index, text, formats);
 - [HTML Editor Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Overview/)
 - [HTML Editor — Toolbar](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Toolbar/)
 - [Popup Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/Popup/Overview/)
-- [Angular HTML Editor Documentation](https://js.devexpress.com/Angular/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [React HTML Editor Documentation](https://js.devexpress.com/React/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [Vue HTML Editor Documentation](https://js.devexpress.com/Vue/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [jQuery HTML Editor Documentation](https://js.devexpress.com/jQuery/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [ASP.NET Core HTML Editor Documentation](https://docs.devexpress.com/AspNetCore/401367/devextreme-based-controls/controls/html-editor)
+- [HTML Editor Documentation](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
 <!-- feedback -->
 ## Does This Example Address Your Development Requirements/Objectives?
 
