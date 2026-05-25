@@ -5,14 +5,14 @@
 <!-- default badges end -->
 # DevExtreme HTML Editor - Custom Toolbar Dialogs
 
-The DevExtreme HTML Editor ships with built-in toolbar dialogs to insert links and images. This example adds new dialogs to the toolbar using custom DevExtreme Popup-based components:
+The DevExtreme HTML Editor ships with built-in toolbar dialogs designed to insert links and images. This example adds new dialogs to the toolbar using custom DevExtreme Popup-based components:
 
 - **Video dialog** — inserts a video by URL or from a local file. Supports both embedded (YouTube/Vimeo) and native `<video>` playback.
-- **Link dialog** — edits the link text and URL in a custom popup with full format control.
+- **Link dialog** — edits link text and URL in a custom popup with full format control.
 - **Emoji popover** — inserts emoji characters from a popover.
-- **Markup popup** — inspects the raw HTML markup produced by the editor.
+- **Markup popup** — inspects raw HTML markup produced by the editor.
 
-The example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct format.
+Our example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct format.
 
 ![HTML Editor Custom Dialogs](images/image-template.png)
 
@@ -35,7 +35,7 @@ onEditorInitialized(event) {
 }
 ```
 
-3. After a user confirms the operation via dialog, apply changes using the Quill APIs: 
+3. After a user confirms the operation via the dialog, apply changes using the Quill APIs: 
 
 - `insertEmbed` for video formats.
 - `insertText` for link text.
