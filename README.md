@@ -5,20 +5,20 @@
 <!-- default badges end -->
 # DevExtreme HTML Editor - Custom Toolbar Dialogs
 
-The DevExtreme HTML Editor ships with built-in toolbar dialogs for inserting links and images. This example demonstrates how to replace those built-in dialogs — and add entirely new ones — using custom DevExtreme Popup-based components:
+The DevExtreme HTML Editor ships with built-in toolbar dialogs designed to insert links and images. This example adds new dialogs to the toolbar using custom DevExtreme Popup-based components:
 
-- **Video dialog** — insert a video by URL or by uploading a local file; supports both embedded (YouTube/Vimeo) and native `<video>` playback.
-- **Link dialog** — edit the link text and URL in a custom popup with full format control.
-- **Emoji popover** — pick and insert emoji characters from a lightweight popover.
-- **Markup popup** — inspect the raw HTML markup produced by the editor.
+- **Video dialog** — inserts a video by URL or from a local file. Supports both embedded (YouTube/Vimeo) and native `<video>` playback.
+- **Link dialog** — edits link text and URL in a custom popup with full format control.
+- **Emoji popover** — inserts emoji characters from a popover.
+- **Markup popup** — inspects raw HTML markup produced by the editor.
 
-The example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct embed format.
+Our example also registers custom Quill blots for native `<video>` elements and wires up clipboard matchers so that pasted video links and iframes are automatically converted to the correct format.
 
 ![HTML Editor Custom Dialogs](images/image-template.png)
 
 ## Implementation Details
 
-1. Add custom toolbar buttons using the `widget: 'dxButton'` item type and handle `onClick` to open the corresponding dialog:
+1. Add [custom toolbar buttons](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxHtmlEditor/Configuration/toolbar/items/#widget) using the `widget: 'dxButton'` item type and handle [onClick](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxHtmlEditor/Configuration/toolbar/items/#options) to open the corresponding dialog:
 
 ```js
 { widget: 'dxButton', options: { icon: 'video',  hint: 'Insert/Edit Video',  onClick: () => openVideoDialog()  } }
@@ -26,7 +26,7 @@ The example also registers custom Quill blots for native `<video>` elements and 
 { widget: 'dxButton', options: { text: '😀',     hint: 'Insert Emoji',       onClick: () => openEmojiPopover() } }
 ```
 
-2. Obtain the editor instance from the `onInitialized` event, register custom Quill blots for native video playback, and read the current selection to pre-populate each dialog:
+2. In the [onInitialized](https://js.devexpress.com/Documentation/ApiReference/UI_Components/dxHtmlEditor/Configuration/#onInitialized) event handler, obtain the editor instance, register custom Quill blots for the native video playback, and read the current selection to pre-populate each dialog:
 
 ```js
 onEditorInitialized(event) {
@@ -35,7 +35,11 @@ onEditorInitialized(event) {
 }
 ```
 
-3. On video or link dialog confirmation, apply changes through the Quill API. Use `insertEmbed` for video formats, `insertText` for link text, and always add a trailing newline:
+3. After a user confirms the operation via the dialog, apply changes using the Quill APIs: 
+
+- `insertEmbed` for video formats.
+- `insertText` for link text.
+- Always add a trailing newline.
 
 ```js
 // video
@@ -48,7 +52,7 @@ editorInstance.delete(index, length);
 editorInstance.insertText(index, text, formats);
 ```
 
-4. Configure clipboard matchers via `customizeModules` to intercept pasted `<a>`, `<iframe>`, and `<video>` elements and convert them to the appropriate embed format automatically.
+4. Use `customizeModules` to configure clipboard matchers that intercept pasted `<a>`, `<iframe>`, and `<video>` elements and automatically convert them to the appropriate embed format.
 
 ## Files to Review
 
@@ -98,11 +102,7 @@ editorInstance.insertText(index, text, formats);
 - [HTML Editor Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Overview/)
 - [HTML Editor — Toolbar](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Toolbar/)
 - [Popup Overview](https://js.devexpress.com/Documentation/Guide/UI_Components/Popup/Overview/)
-- [Angular HTML Editor Documentation](https://js.devexpress.com/Angular/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [React HTML Editor Documentation](https://js.devexpress.com/React/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [Vue HTML Editor Documentation](https://js.devexpress.com/Vue/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [jQuery HTML Editor Documentation](https://js.devexpress.com/jQuery/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
-- [ASP.NET Core HTML Editor Documentation](https://docs.devexpress.com/AspNetCore/401367/devextreme-based-controls/controls/html-editor)
+- [HTML Editor Documentation](https://js.devexpress.com/Documentation/Guide/UI_Components/HtmlEditor/Getting_Started_with_HtmlEditor/)
 <!-- feedback -->
 ## Does This Example Address Your Development Requirements/Objectives?
 
