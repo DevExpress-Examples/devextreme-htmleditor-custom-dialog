@@ -41,7 +41,6 @@ export default [
           '**/vitest.config.ts',
           '**/vite.config.ts',
           '**/*.test.tsx',
-          '**/*.test.ts',
           '**/setupTests.ts',
         ],
       }],
