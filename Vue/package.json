@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "devextreme": "26.1.2-beta",
-    "devextreme-dist": "26.1.2-beta",
     "devextreme-quill": "^1.7.9",
     "devextreme-vue": "26.1.2-beta",
     "vue": "^3.2.45",
