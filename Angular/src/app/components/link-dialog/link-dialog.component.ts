@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxHtmlEditorModule, type DxHtmlEditorTypes } from 'devextreme-angular/ui/html-editor';
 import type dxHtmlEditor from 'devextreme/ui/html_editor';
@@ -11,6 +11,7 @@ import { LinkDialogData } from './link-dialog.types';
   selector: 'app-link-dialog',
   imports: [DxButtonModule, DxHtmlEditorModule, DxPopupModule, DxTextBoxModule],
   templateUrl: './link-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./link-dialog.component.scss'],
 })
 export class LinkDialogComponent {

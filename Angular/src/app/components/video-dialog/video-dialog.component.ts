@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxFileUploaderModule } from 'devextreme-angular/ui/file-uploader';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
@@ -17,6 +17,7 @@ export interface VideoDialogData {
   selector: 'app-video-dialog',
   imports: [DxButtonModule, DxFileUploaderModule, DxPopupModule, DxTextBoxModule],
   templateUrl: './video-dialog.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./video-dialog.component.scss'],
 })
 export class VideoDialogComponent implements OnDestroy {

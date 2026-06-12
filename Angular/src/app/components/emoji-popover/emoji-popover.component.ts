@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DxPopoverModule } from 'devextreme-angular/ui/popover';
 import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { EMOJI_LIST, EmojiItem } from '../../data';
@@ -7,6 +7,7 @@ import { EMOJI_LIST, EmojiItem } from '../../data';
   selector: 'app-emoji-popover',
   imports: [DxPopoverModule, DxTextBoxModule],
   templateUrl: './emoji-popover.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./emoji-popover.component.scss'],
 })
 export class EmojiPopoverComponent {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { DxHtmlEditorModule } from 'devextreme-angular/ui/html-editor';
 import { InitializedEvent } from 'devextreme/ui/html_editor';
 import {
@@ -27,6 +27,7 @@ interface SelectionRange {
     VideoDialogComponent,
   ],
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnDestroy {

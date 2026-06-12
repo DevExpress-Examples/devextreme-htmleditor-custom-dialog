@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 
 @Component({
   selector: 'app-markup-popup',
   imports: [DxPopupModule],
   templateUrl: './markup-popup.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./markup-popup.component.scss'],
 })
 export class MarkupPopupComponent {
